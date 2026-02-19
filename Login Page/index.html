@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<title>Log In - Whispering Hills Community Finder</title>
+</head>
+<body>
+	<div id="main">
+		<h1>Whispering Hills Community Finder</h1>
+		<div id="header">
+			<a href="../Home Page/index.html">Home</a>
+			<a href="../Home Page/index.html#about">About us</a>
+			<a href="index.html">Log In</a>
+			<a href="#">Sign Up</a>
+		</div>
+		<div id="loginForm">
+			<h2>Log In</h2>
+			<div class="divider"></div>
+			<form id="login" onsubmit="return validateLogin(event)">
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" required />
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required />
+				<input type="submit" value="Log In" />
+			</form>
+			<p id="errorMessage">Invalid username or password. Please try again.</p>
+		</div>
+	</div>
+	<div id="footer">
+		<a href="http://www.bryantsmith.com/template">free css template</a> by <a href="http://www.bryantsmith.com">florida web design</a>
+	</div>
+	<script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/* Login Page - matches Home Page style */
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	background: #FFFFFF;
+}
+
+* {
+	margin: 0 auto 0 auto;
+	text-align: left;
+}
+
+html, body {
+	text-align: center;
+}
+
+p {
+	text-align: left;
+}
+
+h1 {
+	font-size: 30px;
+	font-weight: normal;
+	padding: 10px;
+}
+
+h2 {
+	font-size: 26px;
+	font-weight: normal;
+	padding-left: 15px;
+	padding-top: 35px;
+}
+
+#main {
+	width: 641px;
+	height: auto;
+	padding-bottom: 20px;
+}
+
+#header {
+	color: #ffffff;
+	clear: both;
+	width: 641px;
+	height: 25px;
+	background-color: #9B1313;
+	background-repeat: no-repeat;
+	text-align: right;
+	line-height: 25px;
+}
+
+#header a, #header a:visited, #header a:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 12px;
+	padding-right: 5px;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+#header a:hover {
+	color: #F2EAEA;
+	border: none;
+}
+
+#footer {
+	color: #ffffff;
+	font-size: 10px;
+	clear: both;
+	width: 641px;
+	height: 25px;
+	background-color: #9B1313;
+	background-repeat: no-repeat;
+	text-align: center;
+	line-height: 25px;
+	font-weight: normal;
+}
+
+#footer a, #footer a:visited, #footer a:hover {
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: #9B1313;
+}
+
+a:hover {
+	color: #9B1313;
+	border-bottom: dashed 1px #DD6A6A;
+}
+
+/* Login form styles */
+#loginForm {
+	float: left;
+	width: 441px;
+	padding: 20px;
+}
+
+#loginForm label {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+	width: 250px;
+	padding: 8px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border: 1px solid #ccc;
+}
+
+#loginForm input[type="submit"] {
+	margin-top: 20px;
+	padding: 8px 20px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #9B1313;
+	color: #FFFFFF;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+#loginForm input[type="submit"]:hover {
+	background-color: #7a0f0f;
+}
+
+#errorMessage {
+	color: #9B1313;
+	font-weight: bold;
+	margin-top: 10px;
+	display: none;
+}
+
+.divider {
+	width: 408px;
+	height: 3px;
+	margin-bottom: 10px;
+	background-color: #DD6A6A;
+}
