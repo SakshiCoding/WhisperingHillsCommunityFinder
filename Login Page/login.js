@@ -20,10 +20,7 @@ function validateLogin(event) {
 		sessionStorage.setItem('loggedInUser', USERS[username].label)
 		window.location.href = '../Home Page/index.html';
 		return false;
-	
-	if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-		window.location.href = '../Home Page/index.html';
-		return false;
+
 	}
 
 	errorMessage.style.display = 'block';
