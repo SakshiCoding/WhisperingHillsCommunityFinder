@@ -3,6 +3,8 @@ const USERS = {
 	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'}
 };
 
+const VALID_USERNAME = 'user1';
+const VALID_PASSWORD = 'CNIT280';
 
 function validateLogin(event) {
 	event.preventDefault();
@@ -16,6 +18,9 @@ function validateLogin(event) {
 		window.location.href = '../Home Page/index.html';
 		return false;
 	
+	if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+		window.location.href = '../Home Page/index.html';
+		return false;
 	}
 
 	errorMessage.style.display = 'block';

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<title>Host Event - Whispering Hills Community Finder</title>
+</head>
+<body>
+	<div id="main">
+		<h1>Whispering Hills Community Finder</h1>
+
+		<div id="header">
+			<a href="../Home Page/index.html">Home</a>
+			<a href="../Home Page/index.html#about">About us</a>
+			<a href="#">Your Account</a>
+		</div>
+
+		<div id="loginForm">  <!-- reuse same styling -->
+			<h2>Host An Event</h2>
+			<div class="divider"></div>
+
+			<form id="eventForm" onsubmit="return validateEvent(event)">
+
+				<label for="eventname">Event Name</label>
+				<input type="text" id="eventname" name="eventname" required />
+
+				<label for="startdate">Event Start Date</label>
+				<input type="date" id="startdate" name="startdate" required />
+
+				<label for="location">Event Address</label>
+				<input type="text" id="location" name="location" required />
+
+				<label for="contactinfo">Contact Information</label>
+				<input type="text" id="contactinfo" name="contactinfo" required />
+
+				<label for="sponsorname">Sponsor Name</label>
+				<input type="text" id="sponsorname" name="sponsorname" required />
+
+				<label for="notes">Notes (Optional)</label>
+				<textarea id="notes" name="notes" rows="3"></textarea>
+
+				<input type="submit" value="Submit Event" />
+			</form>
+
+			<p id="errorMessage">Please fill in all required fields correctly.</p>
+		</div>
+	</div>
+
+	<div id="footer">
+		<a href="http://www.bryantsmith.com/template">free css template</a>
+	</div>
+
+	<script src="event.js"></script>
+</body>
+</html>
