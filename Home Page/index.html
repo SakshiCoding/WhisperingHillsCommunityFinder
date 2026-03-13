@@ -37,6 +37,8 @@ Released   : 20081009
                 <ul id="job-list">
                     <li><strong>Junior Web Developer</strong><br>XYZ Tech</li>
                     <li><strong>Event Coordinator</strong><br>ABC Organization</li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech has recieved your application</strong></li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
                 </ul>
                 <button onclick="closeNotifications()">Close</button>
             </div>
@@ -157,11 +159,26 @@ Released   : 20081009
                 if(dot) dot.style.display = 'none'; 
             };
         }
+
+        if(userLabel && authContainer){
+            let recruiterLink = ""; 
+
+            if(userLabel.toLowerCase().includes('recruiter')){
+                recruiterLink = `<a href="../Applications/list.html">Applications</a>`;
+            }
+
+            authContainer.innerHTML = ` 
+                ${recruiterLink}
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+            `;
+        }
+
     }; 
     function closeNotifications() {
         document.getElementById('notification-window').style.display = 'none';
     }
-
+zz
 
     function logout() {
         sessionStorage.removeItem('loggedInUser');
