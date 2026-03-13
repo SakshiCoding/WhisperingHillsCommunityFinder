@@ -1,6 +1,7 @@
 const USERS = {
 	'user1': { password: 'CNIT280', label: 'user1 (Client)'},
-	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'}
+	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'},
+	'recruiter1': { password: 'CNIT280', label: 'recruiter1 (Recruiter)'}
 };
 
 const VALID_USERNAME = 'user1';
