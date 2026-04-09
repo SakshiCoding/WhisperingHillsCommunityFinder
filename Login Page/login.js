@@ -1,4 +1,4 @@
-const VALID_USERNAME = 'user1';
+const VALID_USERNAMES = ['user1', 'admin1'];
 const VALID_PASSWORD = 'CNIT280';
 
 function validateLogin(event) {
@@ -8,7 +8,8 @@ function validateLogin(event) {
 	const password = document.getElementById('password').value;
 	const errorMessage = document.getElementById('errorMessage');
 
-	if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+	if (VALID_USERNAMES.includes(username) && password === VALID_PASSWORD) {
+		localStorage.setItem('whcfUser', username);
 		window.location.href = '../Home Page/index.html';
 		return false;
 	}
