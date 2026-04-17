@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<title>Host Event - Whispering Hills Community Finder</title>
+	<title>Administrator Opportunity Management - Whispering Hills Community Finder</title>
 </head>
 <body>
 	<div id="main">
@@ -14,31 +14,47 @@
 			<a href="../Login Page/index.html">Log In</a>
 			<a href="#">Sign Up</a>
 		</div>
+
+		<!-- External opportunity input section (based on Host An Event) -->
 		<div id="EventHostForm">
-			<h2>Host An Event</h2>
+			<h2>External Opportunity Submission</h2>
 			<div class="divider"></div>
+
 			<form id="eventForm" onsubmit="return validateEvent(event)">
-				<label for="eventname">Event Name</label>
+				<label for="orgname">Organization Name</label>
+				<input type="text" id="orgname" name="orgname" required />
+
+				<label for="eventname">Opportunity Title</label>
 				<input type="text" id="eventname" name="eventname" required />
-				<label for="startdate">Event Start Date</label>
+
+				<label for="startdate">Start Date</label>
 				<input type="date" id="startdate" name="startdate" required />
-				<label for="location">Event Address</label>
+
+				<label for="location">Location / Address</label>
 				<input type="text" id="location" name="location" required />
-				<label for="contactinfo">Contact Information</label>
+
+				<label for="contactinfo">Contact Information (Name / Email)</label>
 				<input type="text" id="contactinfo" name="contactinfo" required />
-				<label for="sponsorname">Sponsor Name</label>
+
+				<label for="sponsorname">Sponsoring Organization / Partner</label>
 				<input type="text" id="sponsorname" name="sponsorname" required />
-				<label for="notes">Notes (Optional)</label>
+
+				<label for="notes">Opportunity Details / Notes (Optional)</label>
 				<textarea id="notes" name="notes" rows="3"></textarea>
-				<input type="submit" value="Submit Event" />
+
+				<input type="submit" value="Submit Opportunity" />
 			</form>
-			<p id="errorMessage">Please fill in all required fields correctly.</p>
+
+			<p id="externalErrorMessage">Please fill in all required fields correctly.</p>
 		</div>
 	</div>
+
 	<div id="footer">
 		<a href="http://www.bryantsmith.com/template">free css template</a> by <a href="http://www.bryantsmith.com">florida web design</a>
 	</div>
-	<script src="event.js"></script>
+
+	<script src="../Host An Event/event.js"></script>
 	<script src="../shared/auth-nav.js"></script>
 </body>
 </html>
+
