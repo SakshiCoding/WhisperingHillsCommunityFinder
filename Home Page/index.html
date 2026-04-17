@@ -24,10 +24,14 @@ Released   : 20081009
   <div id="main">
   	<h1>Whispering Hills Community Finder</h1>
   	<div id="header">
-    	<a href="index.html">Home</a>
-        <a href="#about">About us</a>
+    	 <a href="index.html">Home</a>
+         <a href="#about">About us</a>
 
-        <div id="notification-area" style="display: none; position: relative; vertical-align: top;"> 
+         <span id="volunteer-tools" style="display: none;">
+         <a href="../Volunteer Page/vetting.html" style="color: #FFD700;">Vetting Queue</a>
+         </span>
+
+         <div id="notification-area" style="display: none; position: relative; vertical-align: top;"> 
             <a href="#" id="notification-btn">Notifications</a>
             <span id="notification-dot"></span>
             
@@ -115,6 +119,7 @@ Released   : 20081009
         const dot = document.getElementById('notification-dot'); 
         const notifyWindow = document.getElementById('notification-window'); 
         const notificationArea = document.getElementById('notification-area'); 
+        const jobList = document.getElementById('job-list');
 
         console.log('Logged in user:', userLabel); 
 
@@ -129,6 +134,20 @@ Released   : 20081009
                 <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
                 <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
             `;
+
+            // Requirement 502: Only Clients see the Notification button
+         if (userLabel.toLowerCase().includes('client')) {
+         if (notificationArea) notificationArea.style.display = 'inline-block';
+         if (dot) dot.style.display = 'block';
+         } 
+    
+        // Requirement 501: Only Volunteers see the Vetting Queue link
+         else if (userLabel.toLowerCase().includes('volunteer')) {
+         const volTools = document.getElementById('volunteer-tools');
+         if (volTools) {
+            volTools.style.display = 'inline-block'; // Typical Course Step 1
+             }
+         }
         
             if(userLabel.toLowerCase().includes('client')){
                 if(notificationArea){
@@ -171,6 +190,15 @@ Released   : 20081009
                 <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
                 <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
             `;
+        }
+
+        if (approvedData.length > 0) {
+            jobList.innerHTML = ''; // Clear hardcoded mock data
+            approvedData.forEach(item => {
+                // System displays only approved records
+                jobList.innerHTML += `<li><strong>${item.name}</strong><br>${item.details}</li>`;
+            });
+            document.getElementById('notification-dot').style.display = 'block';
         }
 
     }; 
