@@ -90,6 +90,17 @@ function replaceAuthLinks() {
 		logoutUser();
 	});
 
+	var subscribersItem = null;
+	if (user === 'admin1') {
+		subscribersItem = document.createElement('a');
+		subscribersItem.href = '../Newsletter Subscribers/index.html';
+		subscribersItem.textContent = 'View Current Newsletter Subscribers';
+		subscribersItem.style.display = 'block';
+		subscribersItem.style.padding = '8px 10px';
+		subscribersItem.style.color = '#9B1313';
+		subscribersItem.style.textDecoration = 'none';
+	}
+
 	userButton.addEventListener('click', function () {
 		menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 	});
@@ -101,6 +112,9 @@ function replaceAuthLinks() {
 	});
 
 	menu.appendChild(accountItem);
+	if (subscribersItem) {
+		menu.appendChild(subscribersItem);
+	}
 	menu.appendChild(logoutItem);
 	userMenu.appendChild(userButton);
 	userMenu.appendChild(menu);
