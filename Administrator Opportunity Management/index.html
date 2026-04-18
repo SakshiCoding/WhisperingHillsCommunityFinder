@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<title>Administrator Opportunity Management - Whispering Hills Community Finder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Administrator Opportunity Management - Whispering Hills</title>
 </head>
 <body>
-	<div id="main">
-		<h1>Whispering Hills Community Finder</h1>
-		<div id="header">
-			<a href="../Home Page/index.html">Home</a>
-			<a href="../Home Page/index.html#about">About us</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
-		</div>
+    <div id="main">
+        <h1>Whispering Hills Community Finder</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Home</a>
+            <a href="../Home Page/index.html#about">About us</a>
+            <a href="../Login Page/index.html">Log In</a>
+        </div>
 
-		<!-- External opportunity input section (based on Host An Event) -->
-		<div id="EventHostForm">
-			<h2>External Opportunity Submission</h2>
-			<div class="divider"></div>
+        <div id="EventHostForm">
+            <h2>External Opportunity Submission</h2>
+            <div class="divider"></div>
 
-			<form id="eventForm" onsubmit="return validateEvent(event)">
-				<label for="orgname">Organization Name</label>
-				<input type="text" id="orgname" name="orgname" required />
+            <form id="eventForm" onsubmit="return validateEvent(event)">
 
 				<label for="eventname">Opportunity Title</label>
 				<input type="text" id="eventname" name="eventname" required />
+
+				<label for="category">Category (e.g., Computer Science, Art, Engineering)</label>
+				<input type="text" id="category" name="category" placeholder="Enter Niche Category" required />
+
+				<label for="type">Opportunity Type (e.g., Job, Social, Volunteer)</label>
+				<input type="text" id="type" name="type" placeholder="Enter Opportunity Type" required />
+
+				<label for="orgname">Organization Name</label>
+				<input type="text" id="orgname" name="orgname" required />
 
 				<label for="startdate">Start Date</label>
 				<input type="date" id="startdate" name="startdate" required />
@@ -36,25 +41,150 @@
 				<label for="contactinfo">Contact Information (Name / Email)</label>
 				<input type="text" id="contactinfo" name="contactinfo" required />
 
-				<label for="sponsorname">Sponsoring Organization / Partner</label>
-				<input type="text" id="sponsorname" name="sponsorname" required />
-
 				<label for="notes">Opportunity Details / Notes (Optional)</label>
 				<textarea id="notes" name="notes" rows="3"></textarea>
 
-				<input type="submit" value="Submit Opportunity" />
-			</form>
+				<input type="submit" value="Submit Opportunity" style="background-color: #9B1313; color: white; margin-top: 15px; cursor: pointer;" />
 
-			<p id="externalErrorMessage">Please fill in all required fields correctly.</p>
+            </form>
+
+			<p id="externalErrorMessage" style="display:none; color: red;">Please fill in all required fields.</p>
+
+        </div>
+
+        <div id="AdminQuerySection" style="margin-top: 40px;">
+            <h2>Family Outreach Query </h2>
+            <div class="divider"></div>
+            <button onclick="findInterestedFamilies('Jobs')">Query Job Seekers</button>
+            <button onclick="findInterestedFamilies('Social')">Query Social Events</button>
+			<button onclick="findInterestedFamilies('Computer Science')">CS</button>
+			<button onclick="findInterestedFamilies('Engineering')">Engineering</button>
+			<button onclick="findInterestedFamilies('Art')">Art</button>
+			<button onclick="findInterestedFamilies('Teaching')">Teaching</button>
+            <div id="queryResults" style="margin-top: 15px;"></div>
+        </div>
+
+		<div id="ViewAllSection" style="margin-top: 40px;">
+			<h2>Global Opportunity Database</h2>
+			<div class="divider"></div>
+			<p>Review all active opportunities currently visible to clients:</p>
+			
+			<button onclick="displayAllOpportunities()">View All Opportunities</button>
+			<button onclick="clearDatabase()" style="background-color: #666; color: white; margin-left: 10px;">Clear All Data</button>
+
+			<div id="allOpportunitiesList" style="margin-top: 20px; text-align: left;">
+				</div>
 		</div>
-	</div>
+    </div>
 
-	<div id="footer">
-		<a href="http://www.bryantsmith.com/template">free css template</a> by <a href="http://www.bryantsmith.com">florida web design</a>
-	</div>
+    <script>
 
-	<script src="../Host An Event/event.js"></script>
-	<script src="../shared/auth-nav.js"></script>
+		function initializePresets() {
+			let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+			
+			const presets = [
+				{ title: "Junior Web Developer", org: "Tech Corp", location: "Remote", category: "Computer Science", type: "Jobs", date: "2026-04-17" },
+				{ title: "Civil Engineering Intern", org: "Build-It Co", location: "Downtown", category: "Engineering", type: "Jobs", date: "2026-04-17" },
+				{ title: "Community Mural Project", org: "Art Council", location: "East Park", category: "Art", type: "Social", date: "2026-04-17" },
+				{ title: "Math Tutor", org: "City Schools", location: "Library", category: "Teaching", type: "Jobs", date: "2026-04-17" },
+				{ title: "Software Workshop", org: "Code Hub", location: "Virtual", category: "Computer Science", type: "Social", date: "2026-04-17" }
+			];
+
+			let itemsAdded = 0;
+
+			presets.forEach(preset => {
+				// Only add the preset if an opportunity with that exact title doesn't exist
+				const exists = globalOpportunities.some(item => item.title === preset.title);
+				if (!exists) {
+					globalOpportunities.push(preset);
+					itemsAdded++;
+				}
+			});
+
+			if (itemsAdded > 0) {
+				localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+				console.log(`${itemsAdded} presets merged into the database.`);
+			}
+		}
+
+
+		initializePresets();
+		function validateEvent(e) {
+			e.preventDefault();
+			try {
+				const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : "N/A";
+
+				const newOpportunity = {
+					title: getVal('eventname'),
+					category: document.getElementById('category').value, 
+    				type: document.getElementById('type').value,         
+					org: getVal('orgname'),
+					location: getVal('location'),
+					contact: getVal('contactinfo'),
+					details: getVal('notes'),
+					date: new Date().toLocaleDateString()
+				};
+
+				let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+				globalOpportunities.push(newOpportunity);
+				localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+
+				alert(`SUCCESS: "${newOpportunity.title}" saved!`);
+				document.getElementById('eventForm').reset();
+				
+				if (typeof displayAllOpportunities === "function") displayAllOpportunities();
+
+			} catch (err) {
+				console.error("The actual error is:", err);
+				alert("Still failing. Press F12 and look at the 'Console' tab to see the red error message.");
+			}
+			return false;
+	}
+	function displayAllOpportunities() {
+		const displayArea = document.getElementById('allOpportunitiesList');
+		// Ensure this key matches exactly what you used in initializePresets
+		const allData = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+
+		if (allData.length === 0) {
+			displayArea.innerHTML = "<p><em>The database is currently empty.</em></p>";
+			return;
+		}
+
+		let html = `<table border="1" style="width:100%; border-collapse: collapse; font-size: 11px;">
+						<tr style="background-color: #9B1313; color: white;">
+							<th>Title</th><th>Category</th><th>Type</th>
+						</tr>`;
+
+		allData.forEach(item => {
+			html += `<tr>
+						<td>${item.title}</td>
+						<td>${item.category}</td>
+						<td>${item.type}</td>
+					</tr>`;
+		});
+		html += `</table>`;
+		displayArea.innerHTML = html;
+	}
+
+		function findInterestedFamilies(category) {
+			const families = [
+				{ name: "Smith", interest: "Computer Science", email: "smith@cs.com" },
+				{ name: "Chen", interest: "Engineering", email: "chen@eng.com" },
+				{ name: "Rodriguez", interest: "Art", email: "rod@arts.com" },
+				{ name: "Thompson", interest: "Teaching", email: "prof@teach.com" },
+				{ name: "Miller", interest: "Jobs", email: "miller@work.com" },
+				{ name: "Davis", interest: "Social", email: "davis@social.com" }
+			];
+
+			const results = families.filter(f => f.interest === category || f.interest === "Jobs");
+			const resultsDiv = document.getElementById('queryResults');
+
+			let html = `<h4>Families interested in ${category}:</h4><ul>`;
+			results.forEach(f => {
+				html += `<li><a href="family-details.html?name=${f.name}">View ${f.name} Profile (${f.interest})</a></li>`;
+			});
+			resultsDiv.innerHTML = results.length > 0 ? html + "</ul>" : "No matches found.";
+		}
+	</script>
 </body>
 </html>
-

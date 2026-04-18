@@ -9,6 +9,7 @@ const USERS = {
 const VALID_USERNAME = 'user1';
 const VALID_PASSWORD = 'CNIT280';
 
+
 function validateLogin(event) {
 	event.preventDefault();
 
@@ -27,4 +28,5 @@ function validateLogin(event) {
 
 	errorMessage.style.display = 'block';
 	return false;
+}
 }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Family Profile - Admin View</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Family Detailed Profile</h1>
+        <div id="header">
+            <a href="index.html">Back to Management</a>
+            <a href="../Home Page/index.html">Home</a>
+        </div>
+        <div id="contentColumn">
+            <h2 id="familyName">Loading...</h2>
+            <div class="divider"></div>
+            <div id="profileDetails" style="text-align: left; padding: 20px;"></div>
+            <button onclick="window.history.back()">Return to Query</button>
+        </div>
+    </div>
+  <script>
+        // 1. Get the name from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        let rawName = urlParams.get('name'); 
+        
+        // Debugging: This will show in your F12 Console
+        console.log("Name received from URL:", rawName);
+
+        // 2. The Database (Keys must be simple)
+        const familyData = {
+            "Smith": { email: "smith@cs.com", interest: "Computer Science", notes: "Junior Web Dev interest." },
+            "Johnson": { email: "johnson@work.com", interest: "Jobs", notes: "Looking for manual labor." },
+            "Garcia": { email: "garcia@arts.com", interest: "Art", notes: "Interested in community murals." },
+            "Chen": { email: "chen@eng.com", interest: "Engineering", notes: "Engineering internship seeker." },
+            "Thompson": { email: "prof@teach.com", interest: "Teaching", notes: "Available for math tutoring." }
+        };
+
+        const nameHeader = document.getElementById('familyName');
+        const detailsDiv = document.getElementById('profileDetails');
+
+        // 3. The "Smart Match" Logic
+        if (rawName) {
+            // Clean the name: Remove " Family", trim spaces, and make it match the keys
+            let cleanName = rawName.replace(" Family", "").trim();
+            
+            if (familyData[cleanName]) {
+                const data = familyData[cleanName];
+                nameHeader.innerText = cleanName + " Family Profile";
+                
+                detailsDiv.innerHTML = `
+                    <p><strong>Primary Contact:</strong> ${data.email}</p>
+                    <p><strong>Interest:</strong> ${data.interest}</p>
+                    <p><strong>Admin Notes:</strong> ${data.notes}</p>
+                    <br>
+                    <<div style="margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                    <p><strong>Step 3: Send Notification</strong></p>
+                    <input type="text" id="opportunityInput" placeholder="Type opportunity name here..." 
+                        style="padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+                    
+                    <button onclick="notifyFamily()" 
+                            style="background-color: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; margin-left: 10px;">
+                        Notify Family
+                    </button>
+                `;
+            } else {
+                nameHeader.innerText = "Family Not Found";
+                detailsDiv.innerHTML = `<p>Couldn't find data for "${cleanName}". Check if the name exists in the database.</p>`;
+            }
+        } 
+
+        function notifyFamily() {
+            const oppName = document.getElementById('opportunityInput').value.trim();
+
+            if (oppName === "") {
+                alert("Please enter the name of the opportunity before notifying the family.");
+                return;
+            }
+
+            alert(`Success! Family has been informed about "${oppName}" via Email.`);
+            
+            document.getElementById('opportunityInput').value = "";
+        }
+
+    </script>
+</body>
+</html>

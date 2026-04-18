@@ -1,4 +1,25 @@
 /* A Free Design by Bryant Smith (bryantsmith.com) */
+/* Force White Background and Black Text */
+body, #main, #contentColumn {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+/* Fix the header links (was white text on white background) */
+#header a, #header span {
+    color: #000000 !important;
+    font-weight: bold;
+}
+
+/* Fix headings and paragraphs */
+h1, h2, h3, p, li {
+    color: #000000 !important;
+}
+
+/* Keep the horizontal dividers visible */
+.divider {
+    background-color: #9B1313 !important;
+}
 
 body {
 	margin: 0;
@@ -39,9 +60,12 @@ padding-top:35px;
 
 #main
 {
-width:641px;
-height:auto;
-padding-bottom:20px;
+    width:800px;
+    margin: 0 auto; 
+    background-color: #FFFFFF;
+    overflow: hidden;
+    height:auto;
+    padding-bottom:20px;
 }
 
 #header
@@ -100,7 +124,10 @@ border:none;
 #contentColumn
 {
 float:left;
-width:441px;
+width:550px !important;
+padding: 20px 0;
+margin: 0;
+background-color: #FFFFFF !important;
 }
 
 #navColumn
@@ -108,6 +135,7 @@ width:441px;
 float:left;
 width:200px;
 padding-top:50px;
+margin: 0;
 }
 #contentColumn p
 {
@@ -171,8 +199,9 @@ margin:6px;
 {
 background-image:url(divider.jpg);
 width:408px;
-height:3px;
-margin-bottom:10px;
+height:1px;
+clear: both;
+margin-bottom:15px;
 
 }
 .subHeader
@@ -212,5 +241,95 @@ a:hover
 {
 color:#9B1313;
 border-bottom:dashed 1px #DD6A6A;
+}
+
+/* Fix the background and general text */
+body, #main {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+/* Fix the Header Bar */
+#header {
+    width: 100%;
+    height: auto !important; /* Let it grow with the text */
+    min-height: 35px;
+    background-color: #9B1313; /* Keep the red bar */
+    display: flex;
+    justify-content: space-between; /* Pushes Home/About left and LogIn right */
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+/* Fix Header Link Colors */
+#header a, #header span {
+    color: #FFFFFF !important; /* Keep header links white so they are visible on red */
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+/* Fix the Main Content and Sidebar positioning */
+#contentColumn {
+    float: left;
+    width: 580px; /* Adjust to fit your template */
+    padding-top: 20px;
+}
+
+#navColumn {
+    float: right;
+    width: 180px;
+    padding-top: 20px;
+}
+
+/* Fix the text inside the columns to be black */
+h1, h2, h3, p, li, .subHeader h3 {
+    color: #000000 !important;
+}
+
+/* Fix the sidebar links to be readable */
+#navColumn ul li a {
+    color: #9B1313 !important;
+    text-decoration: none;
+}
+
+/* --- Custom Search Results Styles --- */
+
+/* Ensures the search area doesn't push the sidebar down */
+#searchResultsSection {
+    float: left;            /* Matches the contentColumn float */
+    width: 550px !important; /* Matches the contentColumn width */
+    background-color: #FFFFFF;
+    color: #000000;
+    padding-top: 20px;
+    display: none;          /* Hidden by default until you type */
+}
+
+/* Styles for the "Cards" that appear in the search results */
+.search-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-card h3 {
+    margin-top: 0;
+    color: #9B1313 !important; /* Whispering Hills Red */
+}
+
+.search-card p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #333 !important;
+}
+
+/* Clearfix for the footer */
+#footer {
+    clear: both;
+    padding-top: 20px;
 }
 
