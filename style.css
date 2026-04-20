@@ -166,3 +166,16 @@ color:#9B1313;
 border-bottom:dashed 1px #DD6A6A;
 }
 
+/* Home page: Opportunities / Event Archive sidebar links only for user1 */
+#main.whcf-home-layout #navColumn[data-role-sidebar="user1"] {
+	display: none;
+}
+
+body.whcf-user1-sidebar #main.whcf-home-layout #navColumn[data-role-sidebar="user1"] {
+	display: block;
+}
+
+body:not(.whcf-user1-sidebar) #main.whcf-home-layout #contentColumn {
+	width: 641px;
+}
+
