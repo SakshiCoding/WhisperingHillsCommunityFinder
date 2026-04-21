@@ -78,7 +78,7 @@
     </div>
 
     <script>
-
+		//1. Initialize database on load 
 		function initializePresets() {
 			let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
 			
@@ -107,8 +107,91 @@
 			}
 		}
 
+		function initializeUserDatabase() {
+    	// Check if the database already exists to avoid overwriting user changes
+		if (!localStorage.getItem('userDatabase')) {
+			const families = [
+				{ name: "Smith", interest: "Computer Science", email: "smith@cs.com" },
+				{ name: "Chen", interest: "Engineering", email: "chen@eng.com" },
+				{ name: "Rodriguez", interest: "Art", email: "rod@arts.com" },
+				{ name: "Thompson", interest: "Teaching", email: "prof@teach.com" },
+				{ name: "Miller", interest: "Jobs", email: "miller@work.com" },
+				{ name: "Davis", interest: "Social", email: "davis@social.com" }
+			];
 
+			const initialDb = {};
+
+			families.forEach(f => {
+				// We create a lowercase username (e.g., "smith") to act as the key
+				const username = f.name.toLowerCase();
+				
+				initialDb[username] = {
+					fname: f.name,
+					lname: "Family",
+					email: f.email,
+					resume: `Interested in ${f.interest} opportunities.`,
+					interests: f.interest
+				};
+			});
+
+			// Specific demo override for user1 (Mikasa Ackerman) as requested
+			initialDb["user1"] = {
+				fname: "Mikasa",
+				lname: "Ackerman",
+				email: "mikasa@surveycorp.com",
+				resume: "Expert in physical coordination and mural restoration.",
+				interests: "Art, Jobs"
+			};
+
+			localStorage.setItem('userDatabase', JSON.stringify(initialDb));
+			console.log("User Database initialized with preset families.");
+		}
+	}
+
+	// Call this immediately
+	initializeUserDatabase();
+		//run immediately
 		initializePresets();
+		
+		//2. The view function
+		function displayAllOpportunities() {
+			const displayArea = document.getElementById('allOpportunitiesList');
+			const allData = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+
+			if (allData.length === 0) {
+				displayArea.innerHTML = "<p><em>The database is currently empty.</em></p>";
+				return;
+			}
+
+			let html = `<table border="1" style="width:100%; border-collapse: collapse; font-size: 11px;">
+							<tr style="background-color: #9B1313; color: white;">
+								<th>Title</th><th>Category</th><th>Type</th><th>Actions</th>
+							</tr>`;
+
+			allData.forEach((item, index) => {
+				html += `<tr>
+							<td>${item.title}</td>
+							<td>${item.category || 'N/A'}</td>
+							<td>${item.type || 'N/A'}</td>
+							<td style="text-align: center;">
+								<button onclick="deleteOpportunity(${index})" style="cursor:pointer; border:none; background:none; font-weight:bold; font-size:16px;">...</button>
+							</td>
+						</tr>`;
+			});
+			html += `</table>`;
+			displayArea.innerHTML = html;
+		}
+		//3. The delete function
+		function deleteOpportunity(index) {
+			let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+			
+			if (confirm(`Delete "${globalOpportunities[index].title}"?`)) {
+				globalOpportunities.splice(index, 1);
+				localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+				displayAllOpportunities(); // Refresh the table
+			}
+		}
+
 		function validateEvent(e) {
 			e.preventDefault();
 			try {
@@ -139,51 +222,33 @@
 				alert("Still failing. Press F12 and look at the 'Console' tab to see the red error message.");
 			}
 			return false;
-	}
-	function displayAllOpportunities() {
-		const displayArea = document.getElementById('allOpportunitiesList');
-		// Ensure this key matches exactly what you used in initializePresets
-		const allData = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+		}
+		
+		function findInterestedFamilies(category) {
+			const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+			const resultsDiv = document.getElementById('queryResults');
+			let found = false;
 
-		if (allData.length === 0) {
-			displayArea.innerHTML = "<p><em>The database is currently empty.</em></p>";
-			return;
+			let html = `<h4>Results for ${category}:</h4><ul>`;
+
+			for (let username in userDb) {
+				const user = userDb[username];
+				// Check if the category matches their interests string
+				if (user.interests.toLowerCase().includes(category.toLowerCase())) {
+					html += `<li><a href="family-details.html?name=${user.fname}%20${user.lname}&user=${username}">
+							View ${user.fname} ${user.lname} Profile (${user.interests})</a></li>`;
+					found = true;
+				}
+			}
+
+			resultsDiv.innerHTML = found ? html + "</ul>" : "No matches found for this category.";
 		}
 
-		let html = `<table border="1" style="width:100%; border-collapse: collapse; font-size: 11px;">
-						<tr style="background-color: #9B1313; color: white;">
-							<th>Title</th><th>Category</th><th>Type</th>
-						</tr>`;
-
-		allData.forEach(item => {
-			html += `<tr>
-						<td>${item.title}</td>
-						<td>${item.category}</td>
-						<td>${item.type}</td>
-					</tr>`;
-		});
-		html += `</table>`;
-		displayArea.innerHTML = html;
-	}
-
-		function findInterestedFamilies(category) {
-			const families = [
-				{ name: "Smith", interest: "Computer Science", email: "smith@cs.com" },
-				{ name: "Chen", interest: "Engineering", email: "chen@eng.com" },
-				{ name: "Rodriguez", interest: "Art", email: "rod@arts.com" },
-				{ name: "Thompson", interest: "Teaching", email: "prof@teach.com" },
-				{ name: "Miller", interest: "Jobs", email: "miller@work.com" },
-				{ name: "Davis", interest: "Social", email: "davis@social.com" }
-			];
-
-			const results = families.filter(f => f.interest === category || f.interest === "Jobs");
-			const resultsDiv = document.getElementById('queryResults');
-
-			let html = `<h4>Families interested in ${category}:</h4><ul>`;
-			results.forEach(f => {
-				html += `<li><a href="family-details.html?name=${f.name}">View ${f.name} Profile (${f.interest})</a></li>`;
-			});
-			resultsDiv.innerHTML = results.length > 0 ? html + "</ul>" : "No matches found.";
+		function clearDatabase() {
+			if (confirm("Are you sure you want to clear EVERY opportunity from the system?")) {
+				localStorage.removeItem('globalOpportunities');
+				displayAllOpportunities();
+			}
 		}
 	</script>
 </body>

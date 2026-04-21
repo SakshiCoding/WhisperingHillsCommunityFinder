@@ -18,69 +18,87 @@
             <button onclick="window.history.back()">Return to Query</button>
         </div>
     </div>
-  <script>
-        // 1. Get the name from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        let rawName = urlParams.get('name'); 
-        
-        // Debugging: This will show in your F12 Console
-        console.log("Name received from URL:", rawName);
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawName = urlParams.get('name'); // e.g., "Mikasa Ackerman"
+    const targetUser = urlParams.get('user'); // e.g., "user1"
 
-        // 2. The Database (Keys must be simple)
-        const familyData = {
-            "Smith": { email: "smith@cs.com", interest: "Computer Science", notes: "Junior Web Dev interest." },
-            "Johnson": { email: "johnson@work.com", interest: "Jobs", notes: "Looking for manual labor." },
-            "Garcia": { email: "garcia@arts.com", interest: "Art", notes: "Interested in community murals." },
-            "Chen": { email: "chen@eng.com", interest: "Engineering", notes: "Engineering internship seeker." },
-            "Thompson": { email: "prof@teach.com", interest: "Teaching", notes: "Available for math tutoring." }
+    const nameHeader = document.getElementById('familyName');
+    const detailsDiv = document.getElementById('profileDetails');
+
+    // 1. Pull from the NEW database
+    const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+    let userData = null;
+
+    // 2. Logic to find the person
+    if (targetUser && userDb[targetUser]) {
+        // Best way: find by the username key
+        userData = userDb[targetUser];
+    } else if (rawName) {
+        // Backup: Look for a name match in the database
+        const cleanName = rawName.replace(" Family", "").trim().toLowerCase();
+        for (let key in userDb) {
+            const fullName = (userDb[key].fname + " " + userDb[key].lname).toLowerCase();
+            if (fullName === cleanName || key === cleanName) {
+                userData = userDb[key];
+                break;
+            }
+        }
+    }
+
+    // 3. Display the data
+    if (userData) {
+        nameHeader.innerText = userData.fname + " " + userData.lname + " Profile";
+        
+        detailsDiv.innerHTML = `
+            <p><strong>Primary Contact:</strong> ${userData.email}</p>
+            <p><strong>Interests:</strong> ${userData.interests}</p>
+            <p><strong>Resume/Skillset:</strong> ${userData.resume}</p>
+            <br>
+            <div style="margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #ddd;">
+                <p><strong>Step 3: Send Notification</strong></p>
+                <input type="text" id="opportunityInput" placeholder="Type opportunity name (e.g. Muralist)..." 
+                    style="padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+                
+                <button onclick="notifyFamily()" 
+                        style="background-color: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; margin-left: 10px;">
+                    Notify Family
+                </button>
+            </div>
+        `;
+    } else {
+        nameHeader.innerText = "Family Not Found";
+        detailsDiv.innerHTML = `<p>Couldn't find data for "${rawName}". Make sure you saved the profile in the Account page first!</p>`;
+    }
+
+    function notifyFamily() {
+        const oppName = document.getElementById('opportunityInput').value.trim();
+        
+        // 1. Get the 'user' parameter from the URL (?user=user1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const target = urlParams.get('user'); 
+
+        if (!oppName) return alert("Please enter an opportunity name.");
+        if (!target) return alert("Error: No recipient found in URL.");
+
+        // 2. Pull the UNIFIED database
+        let db = JSON.parse(localStorage.getItem('allNotifications')) || [];
+        
+        // 3. Create the object using 'recipient' to match index.html
+        const newEntry = {
+            recipient: target.toLowerCase(), // Must be 'recipient'
+            sender: "Administrator",
+            type: "Opportunity Recommendation",
+            message: `Admin recommended: ${oppName}`,
+            date: new Date().toLocaleString()
         };
 
-        const nameHeader = document.getElementById('familyName');
-        const detailsDiv = document.getElementById('profileDetails');
-
-        // 3. The "Smart Match" Logic
-        if (rawName) {
-            // Clean the name: Remove " Family", trim spaces, and make it match the keys
-            let cleanName = rawName.replace(" Family", "").trim();
-            
-            if (familyData[cleanName]) {
-                const data = familyData[cleanName];
-                nameHeader.innerText = cleanName + " Family Profile";
-                
-                detailsDiv.innerHTML = `
-                    <p><strong>Primary Contact:</strong> ${data.email}</p>
-                    <p><strong>Interest:</strong> ${data.interest}</p>
-                    <p><strong>Admin Notes:</strong> ${data.notes}</p>
-                    <br>
-                    <<div style="margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 5px;">
-                    <p><strong>Step 3: Send Notification</strong></p>
-                    <input type="text" id="opportunityInput" placeholder="Type opportunity name here..." 
-                        style="padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
-                    
-                    <button onclick="notifyFamily()" 
-                            style="background-color: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; margin-left: 10px;">
-                        Notify Family
-                    </button>
-                `;
-            } else {
-                nameHeader.innerText = "Family Not Found";
-                detailsDiv.innerHTML = `<p>Couldn't find data for "${cleanName}". Check if the name exists in the database.</p>`;
-            }
-        } 
-
-        function notifyFamily() {
-            const oppName = document.getElementById('opportunityInput').value.trim();
-
-            if (oppName === "") {
-                alert("Please enter the name of the opportunity before notifying the family.");
-                return;
-            }
-
-            alert(`Success! Family has been informed about "${oppName}" via Email.`);
-            
-            document.getElementById('opportunityInput').value = "";
-        }
-
-    </script>
+        db.push(newEntry);
+        localStorage.setItem('allNotifications', JSON.stringify(db));
+        
+        alert(`Success! Notification sent to ${target}.`);
+        document.getElementById('opportunityInput').value = "";
+    }
+</script>
 </body>
 </html>

@@ -9,54 +9,63 @@
 </div>
 
 <script>
-    // Mock database of pending inquiries
-    let inquiries = [
-        { id: 1, name: "Special Needs Summer Camp", details: "Looking for web support \n Phone Number: 123-456-7890 \n Email: abc@gmail.com", status: "pending" },
-        { id: 2, name: "Community Outreach", details: "Form submission for event \n Phone Number: 676-767-6767 \n email: xyz@outlook.com", status: "pending" }
-    ];
+function renderQueue() {
+    const list = document.getElementById('pending-list');
+    const queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
 
-    function renderQueue() {
-        const list = document.getElementById('pending-list');
-        list.innerHTML = '';
-        inquiries.filter(i => i.status === 'pending').forEach(item => {
-            list.innerHTML += `
-                <div class="inquiry-card">
-                    <p><strong>${item.name}</strong>: ${item.details}</p>
-                    <button onclick="approve(${item.id})">Mark Legitimate</button>
-                    <button onclick="reject(${item.id})" style="background:grey;">Reject</button>
-                </div>
-            `;
-        });
+    if (queue.length === 0) {
+        list.innerHTML = "<p>The vetting queue is currently empty.</p>";
+        return;
     }
 
-    function approve(id) {
-        // Typical Course 7: System saves and flags as legitimate
-        let record = inquiries.find(i => i.id === id);
-        record.status = 'legitimate';
-        
-        // Save to "Database" (localStorage)
-        let approved = JSON.parse(localStorage.getItem('approvedData') || '[]');
-        approved.push(record);
-        localStorage.setItem('approvedData', JSON.stringify(approved));
-        
-        renderQueue();
-        alert("Record flagged as legitimate and moved to database.");
-    }
+    list.innerHTML = "";
+    queue.forEach((item, index) => {
+        list.innerHTML += `
+            <div class="search-card" style="border: 1px solid #9B1313; padding: 15px; margin-bottom: 15px;">
+                <h3>${item.title}</h3>
+                <p><strong>Proposed By:</strong> ${item.org}</p>
+                <p><strong>Details:</strong> ${item.details}</p>
+                <p><strong>Location:</strong> ${item.location}</p>
+                <br>
+                <button onclick="legitimize(${index})" style="background: green; color: white; border: none; padding: 10px; cursor: pointer;">Mark Legitimate</button>
+                <button onclick="reject(${index})" style="background: #333; color: white; border: none; padding: 10px; margin-left: 10px; cursor: pointer;">Reject</button>
+            </div>
+        `;
+    });
+}
 
+function legitimize(index) {
+    let queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+    let globalOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+
+    // 1. Get the item and update its status
+    const approvedItem = queue[index];
+    approvedItem.status = "Legitimatized";
+    approvedItem.category = "Community"; // Default
+    approvedItem.type = "Social";        // Default
+
+    // 2. Move it to the main database
+    globalOpps.push(approvedItem);
+    localStorage.setItem('globalOpportunities', JSON.stringify(globalOpps));
+
+    // 3. Remove from queue
+    queue.splice(index, 1);
+    localStorage.setItem('vettingQueue', JSON.stringify(queue));
+
+    alert("Opportunity approved and moved to the Global Database!");
     renderQueue();
+}
 
-    function reject(id) {
-    // Alternate Course 5a: Volunteer identifies submission as illegitimate
-    const index = inquiries.findIndex(i => i.id === id);
-    
-    if (index !== -1) {
-        // Alternate Course 5b: System removes inquiry
-        inquiries.splice(index, 1); 
-        
-        // Typical Course Step 2: System displays unchecked inquiries (refreshed list)
-        renderQueue(); 
-        
-        alert("Inquiry rejected. The submission has been removed from the system.");
+function reject(index) {
+    if (confirm("Are you sure you want to reject this inquiry?")) {
+        let queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+        queue.splice(index, 1);
+        localStorage.setItem('vettingQueue', JSON.stringify(queue));
+        renderQueue();
     }
 }
+
+// Initial load
+window.onload = renderQueue; 
+
 </script>

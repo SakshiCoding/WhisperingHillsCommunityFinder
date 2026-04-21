@@ -24,117 +24,116 @@ Released   : 20081009
   <div id="main">
   	<h1>Whispering Hills Community Finder</h1>
   	<div id="header">
-    <div class="header-left" style="display: flex; align-items: center;">
-            <a href="index.html">Home</a>
-            <a href="#about">About us</a>
+        <a href="index.html">Home</a>
+        <a href="#about">About us</a>
 
-            <span id="volunteer-tools" style="display: none;">
-                <a href="../Volunteer Page/vetting.html" style="color: #FFD700 !important; font-weight: bold;">Vetting Queue</a>
-            </span>
-        </div>
-
-        <div class="header-right" style="display: flex; align-items: center;">
+        <span id="volunteer-tools" style="display: none;">
+            <a href="../Volunteer Page/vetting.html" style="color: #FFD700 !important; font-weight: bold;">Vetting Queue</a>
+        </span>
+    
             
-            <div id="notification-area" style="display: none; position: relative; margin-right: 15px;"> 
-                <a href="#" id="notification-btn">Notifications</a>
-                <span id="notification-dot"></span>
+    <div id="notification-area" style="display: none; position: relative; margin-right: 15px;"> 
+        <a href="#" id="notification-btn">Notifications</a>
+        <span id="notification-dot"></span>
                 
-                <div id="notification-window"> 
-                    <h3>Recommended for You</h3>
-                    <div class="divider" style="width: 100%; height: 1px; background: #9B1313; margin: 10px 0;"></div>
-                    <ul id="job-list" style="list-style: none; padding: 0; text-align: left;">
-                        <li><strong>Recommended For You By Admin</strong><br>Electrical Engineer at Engineer Land</li>
-                        <li style="margin-top: 10px;"><strong>Junior Web Developer</strong><br>XYZ Tech</li>
-                        <li style="margin-top: 10px;"><strong>Event Coordinator</strong><br>ABC Organization</li>
-                        <li style="margin-top: 10px; color: #9B1313;"><strong>APPLICATION UPDATE: XYZ Tech has received your application</strong></li>
-                        <li style="margin-top: 10px; color: #9B1313;"><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
-                    </ul>
-                    <button onclick="closeNotifications()" style="margin-top: 15px; width: 100%; cursor: pointer;">Close</button>
-                </div>
-            </div> 
+        <div id="notification-window"> 
+            <h3>Recommended for You</h3>
+            <div class="divider" style="width: 100%; height: 1px; background: #9B1313; margin: 10px 0;"></div>
+            <ul id="job-list" style="list-style: none; padding: 0; text-align: left;">
+                <li><strong>Recommended For You By Admin</strong><br>Electrical Engineer at Engineer Land</li>
+                <li style="margin-top: 10px;"><strong>Junior Web Developer</strong><br>XYZ Tech</li>
+                <li style="margin-top: 10px;"><strong>Event Coordinator</strong><br>ABC Organization</li>
+                <li style="margin-top: 10px; color: #9B1313;"><strong>APPLICATION UPDATE: XYZ Tech has received your application</strong></li>
+                <li style="margin-top: 10px; color: #9B1313;"><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
+            </ul>
+            <button onclick="closeNotifications()" style="margin-top: 15px; width: 100%; cursor: pointer;">Close</button>
+        </div>
+    </div> 
 
-            <span id="auth-links">
-                <a href="../Login Page/index.html">Log In</a>
-                <a href="#">Sign Up</a>
-            </span>
+    <span id="auth-links">
+        <a href="../Login Page/index.html">Log In</a>
+        <a href="#">Sign Up</a>
+    </span>
+    </div>
+
+    <div id="universal-search-container" style="clear: both; background-color: #FFFFFF; padding: 20px 0; text-align: center;">
+        <input type="text" id="globalSearch" placeholder="Search by job title, category, or description keywords..." 
+            onkeyup="searchGlobalDatabase()" 
+            style="width: 75%; padding: 15px; border: 2px solid #9B1313; border-radius: 30px; font-size: 16px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        
+        <div id="searchResultsSection" style="display: none; margin-top: 30px; text-align: left; padding: 0 10%; background: #fefefe;">
+            <h2 style="color: #9B1313; border-bottom: 2px solid #9B1313;">Search Results</h2>
+            <div id="resultsContent"></div>
+            <button onclick="clearSearch()" style="margin-top: 20px; padding: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px;">Clear Search and Show Mission</button>
+            <hr style="margin-top: 30px;">
         </div>
     </div>
 
-
-<div id="universal-search-container" style="clear: both; background-color: #FFFFFF; padding: 20px 0; text-align: center;">
-    <input type="text" id="globalSearch" placeholder="Search by job title, category, or description keywords..." 
-           onkeyup="searchGlobalDatabase()" 
-           style="width: 75%; padding: 15px; border: 2px solid #9B1313; border-radius: 30px; font-size: 16px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <div id="contentColumn">	
+    <!-- This is an entry, copy and paste it to create a new one -->      
+        <h2>Our Mission</h2>
+            <div class="divider"></div>
+            <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
+                <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
+    <!-- This is an entry, copy and paste it to create a new one -->
     
-    <div id="searchResultsSection" style="display: none; margin-top: 30px; text-align: left; padding: 0 10%; background: #fefefe;">
-        <h2 style="color: #9B1313; border-bottom: 2px solid #9B1313;">Search Results</h2>
-        <div id="resultsContent"></div>
-        <button onclick="clearSearch()" style="margin-top: 20px; padding: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px;">Clear Search and Show Mission</button>
-        <hr style="margin-top: 30px;">
+    
+        <!-- This is an entry, copy and paste it to create a new one -->      
+    <h2>Sponsors</h2>
+            <div class="divider"></div>
+            <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
+                <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
+    <!-- This is an entry, copy and paste it to create a new one -->
+    
+    
+        <!-- This is an entry, copy and paste it to create a new one -->      
+    <h2>Event History</h2>
+            <div class="divider"></div>
+            <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
+                <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
+    <!-- This is an entry, copy and paste it to create a new one -->
+    
+            
+    <!-- This is an entry, copy and paste it to create a new one -->      
+    <h2>Our Volunteer Application Process</h2>
+            <div class="divider"></div>
+            <p>Volunteer applicants assist the program in searching for event oppurtunities, and help the community grow. Background checks are required and volunteers may sign up for the newsletter.</p>
+                <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
+    <!-- This is an entry, copy and paste it to create a new one -->
+    </div>
+
+    <div id="navColumn">
+            <div class="subHeader"><h3>Oppurtunities</h3></div>
+                <ul>
+                    <li><a href="#">Apply to be a Volunteer</a></li>
+                    <li><a href="#">Job Oppurtunities</a></li>
+                    <li><a href="#">Social Oppurtunities</a></li>
+                    <li><a href="#">Join the Program</a></li>
+                    <li id="event-link-container" style="display: none;">
+                        <a href="../Host An Event/index.html" style="font-weight: bold; color: #9B1313;">Create An Event</a>
+                    </li>
+                </ul>
+
+    
+
+            <div class="subHeader"><h3>Event Archieve</h3></div>
+                <ul>
+                    <li><a href="#">Meet The Team</a></li>
+                    <li><a href="#">Job Oppurtunity History</a></li>
+                    <li><a href="#">Social Oppurtunity History</a></li>
+                </ul>
+
     </div>
 </div>
 
+
+
+
 <div style="clear: both;"></div>
-
-<div id="contentColumn">
-		
-  <!-- This is an entry, copy and paste it to create a new one -->      
-    <h2>Our Mission</h2>
-        <div class="divider"></div>
-        <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
-            <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  
-  
-    <!-- This is an entry, copy and paste it to create a new one -->      
-  <h2>Sponsors</h2>
-        <div class="divider"></div>
-        <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
-            <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  
-  
-    <!-- This is an entry, copy and paste it to create a new one -->      
-  <h2>Event History</h2>
-        <div class="divider"></div>
-        <p>I have been a web developer for the past 13 years. I enjoy what I do, and so on occasion I like to create new designs and offer them for free to the public. When I got started many years ago, I always found that looking at other designers work was one of the best ways to learn proper development. So this is my way of giving back. Creating all these templates does take a significant amount of time however, any donation (however small) is always very much appreciated. (<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal%40bryantsmith%2ecom&amp;lc=US&amp;item_name=Bryant%20Smith%20Templates&amp;no_note=0&amp;cn=Type%20message%20here%2e%2e%2e&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" >click here to make a donation.</a>) If you need help with this template, or any other project, feel free to<a href="http://www.bryantsmith.com/contact.php"> send me a note</a>. Use this template however you wish, just please leave the links at the bottom.</p>
-            <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
-  <!-- This is an entry, copy and paste it to create a new one -->
- 
-        
-   <!-- This is an entry, copy and paste it to create a new one -->      
-  <h2>Our Volunteer Application Process</h2>
-        <div class="divider"></div>
-        <p>Volunteer applicants assist the program in searching for event oppurtunities, and help the community grow. Background checks are required and volunteers may sign up for the newsletter.</p>
-            <h2>To use this template without the links, simply <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=paypal@bryantsmith.com&amp;lc=US&amp;item_name=Bryant Smith Templates&amp;amount=5.00&amp;currency_code=USD&amp;no_note=0&amp;currency_code=USD&amp;bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">make a $5.00 donation</a>.</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus elementum dui. Mauris feugiat cursus urna. Suspendisse non turpis at purus vulputate vehicula. Nullam sagittis imperdiet turpis. Nunc posuere ornare dui.  </p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  </div>
-
-  <div id="navColumn">
-		<div class="subHeader"><h3>Oppurtunities</h3></div>
-            <ul>
-                <li><a href="#">Apply to be a Volunteer</a></li>
-                <li><a href="#">Job Oppurtunities</a></li>
-                <li><a href="#">Social Oppurtunities</a></li>
-                <li><a href="#">Join the Program</a></li>
-                <!--<li><a href="../Host An Event/index.html">Create An Event</a></li>-->
-            </ul>
-
-  
-
-		<div class="subHeader"><h3>Event Archieve</h3></div>
-            <ul>
-                <li><a href="#">Meet The Team</a></li>
-                <li><a href="#">Job Oppurtunity History</a></li>
-                <li><a href="#">Social Oppurtunity History</a></li>
-            </ul>
-
-  </div>
-
   
   <script>
     window.onload = function() {
@@ -144,8 +143,6 @@ Released   : 20081009
         const notifyWindow = document.getElementById('notification-window'); 
         const notificationArea = document.getElementById('notification-area'); 
         const jobList = document.getElementById('job-list');
-
-        console.log('Logged in user:', userLabel); 
 
         function initializeDatabase() {
             if (!localStorage.getItem('globalOpportunities')) {
@@ -162,110 +159,117 @@ Released   : 20081009
         }
         initializeDatabase();
 
+        // --- 1. CONSOLIDATED AUTH & HEADER LOGIC ---
         if (userLabel && authContainer) {
-            if(notificationArea){
-                notificationArea.style.display = 'inline-block'; // Show notifications if user is logged in
+            const lowerLabel = userLabel.toLowerCase();
+            let roleLinks = ""; 
+
+            // Add Applications link for Recruiters
+            if (lowerLabel.includes('recruiter')) {
+                roleLinks += `<a href="../Applications/list.html" style="margin-right: 15px;">Applications</a>`;
             }
 
-            // Replace the Log In/Sign Up links with the user label and a Logout button
-            authContainer.innerHTML = `
-                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
-                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
-            `;
-        if (userLabel.toLowerCase().includes('administrator')) {
-            const adminLink = document.createElement('a');
-            adminLink.href = "../Administrator Opportunity Management/index.html"; 
-            adminLink.innerHTML = "Opportunity Management";
-            adminLink.style.color = "#FFD700"; // Gold color to stand out
-            adminLink.style.marginRight = "15px";
-            
-            document.getElementById('header').prepend(adminLink);
-    }
-         if (userLabel.toLowerCase().includes('client')) {
-         if (notificationArea) notificationArea.style.display = 'inline-block';
-         if (dot) dot.style.display = 'block';
-         } 
-    
-        // Requirement 501: Only Volunteers see the Vetting Queue link
-         else if (userLabel.toLowerCase().includes('volunteer')) {
-         const volTools = document.getElementById('volunteer-tools');
-         if (volTools) {
-            volTools.style.display = 'inline-block'; // Typical Course Step 1
-             }
-         }
-        
-            if(userLabel.toLowerCase().includes('client')){
-                if(notificationArea){
-                    notificationArea.style.display = 'inline-block'; 
+            // Add Management link for Admins
+            if (lowerLabel.includes('administrator')) {
+                roleLinks += `<a href="../Administrator Opportunity Management/index.html" style="margin-right: 15px; color: #FFD700 !important;">Opportunity Management</a>`;
+            }
+
+            // Show Volunteer tools
+            if (lowerLabel.includes('volunteer')) {
+                const volTools = document.getElementById('volunteer-tools');
+                if (volTools) volTools.style.display = 'inline-block';
+            }
+
+            // Handle Client notifications display
+            if (lowerLabel.includes('client')) {
+                if (notificationArea) notificationArea.style.display = 'inline-block';
+                if (dot) dot.style.display = 'block';
+            }
+
+            if (userLabel && userLabel.toLowerCase().includes('recruiter')) {
+                const eventLink = document.getElementById('event-link-container');
+                    if (eventLink) {
+                        eventLink.style.display = 'block';
                 }
-
-                if(dot){
-                    dot.style.display = 'block'; 
-                }    
-                dot.style.display = 'block'; // Show the notification dot for clients
-            }
-            else{
-                if(notificationArea){
-                    notificationArea.style.display = 'none'; 
-                }
-            }
-        }
-        
-
-        const btn = document.getElementById('notification-btn');
-
-        if(btn && notifyWindow){
-            btn.onclick = function(e){
-                e.preventDefault(); 
-                const isCurrentlyVisible = notifyWindow.style.display === 'block';
-                notifyWindow.style.display = isCurrentlyVisible ? 'none' : 'block'; 
-
-                if(dot) dot.style.display = 'none'; 
-            };
-        }
-
-        if(userLabel && authContainer){
-            let recruiterLink = ""; 
-
-            if(userLabel.toLowerCase().includes('recruiter')){
-                recruiterLink = `<a href="../Applications/list.html">Applications</a>`;
             }
 
             authContainer.innerHTML = ` 
-                ${recruiterLink}
-                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
-                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+                ${roleLinks}
+                <div class="user-menu">
+                    <span style="cursor: pointer; color: white !important;">
+                        ${userLabel} ▼
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="account.html">Account Settings</a>
+                        <a href="#" onclick="logout()">Log Out</a>
+                    </div>
+                </div>
             `;
-
-            
+        } else if (authContainer) {
+            authContainer.innerHTML = `<a href="../Login Page/index.html">Log In</a> <a href="#">Sign Up</a>`;
         }
 
-        if (approvedData.length > 0) {
-            jobList.innerHTML = ''; // Clear hardcoded mock data
-            approvedData.forEach(item => {
-                // System displays only approved records
-                jobList.innerHTML += `<li><strong>${item.name}</strong><br>${item.details}</li>`;
+        // --- 2. NOTIFICATION WINDOW TOGGLE ---
+        const btn = document.getElementById('notification-btn');
+        if (btn && notifyWindow) {
+            btn.onclick = function(e) {
+                e.preventDefault(); 
+                const isVisible = notifyWindow.style.display === 'block';
+                notifyWindow.style.display = isVisible ? 'none' : 'block'; 
+                if (dot) dot.style.display = 'none'; 
+            };
+        }
+
+        // --- 3. UNIFIED NOTIFICATION STREAM ---
+        if (userLabel && jobList) {
+            const currentUsername = userLabel.split(' ')[0].toLowerCase(); 
+            const allAdminAlerts = JSON.parse(localStorage.getItem('allNotifications')) || [];
+
+            // Filter for this user (using the "allNotifications" database)
+            const myAlerts = allAdminAlerts.filter(n => 
+                n.recipient && n.recipient.toLowerCase() === currentUsername
+            );
+
+            let notificationStream = [
+                { title: "APPLICATION UPDATE", message: "XYZ Tech has received your application", style: "color: #9B1313;", date: "Recent" },
+                { title: "APPLICATION UPDATE", message: "XYZ Tech would like to schedule an interview", style: "color: #9B1313;", date: "Recent" }
+            ];
+
+            myAlerts.forEach(n => {
+                notificationStream.push({
+                    title: n.type ? n.type.toUpperCase() : "ADMIN ALERT",
+                    message: n.message,
+                    style: "font-weight: bold; color: #000;",
+                    date: n.date
+                });
             });
-            document.getElementById('notification-dot').style.display = 'block';
-        }
 
-        const storedOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+            if (notificationStream.length > 0) {
+                jobList.innerHTML = ''; 
+                notificationStream.forEach(notif => {
+                    jobList.innerHTML += `
+                        <li style="margin-top: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; list-style: none; text-align: left;">
+                            <strong style="${notif.style} font-size: 13px; display: block; color: #9B1313 !important;">${notif.title}</strong>
+                            <span style="color: #333 !important; font-size: 12px; display: block; margin-top: 3px;">${notif.message}</span>
+                            <small style="color: #999 !important; font-size: 10px; display: block;">${notif.date}</small>
+                        </li>
+                    `;
+                });
+                if (dot) dot.style.display = 'block';
+            }
 
-        if (storedOpportunities.length > 0 && jobList) {
-            jobList.innerHTML = ''; 
-            storedOpportunities.forEach(item => {
+            // This is the "loop"
+            notificationStream.forEach(notif => {
+                // This is the "rendering" (drawing to the screen)
                 jobList.innerHTML += `
-                    <li>
-                        <strong>${item.title}</strong><br>
-                        <small>${item.org} - ${item.location}</small>
-                    </li>
-                `;
+                    <li style="margin-top: 10px; border-bottom: 1px solid #eee; padding-bottom: 8px; text-align: left; list-style: none;">
+                        <strong style="${notif.style}">${notif.title}</strong><br>
+                        <span>${notif.message}</span><br>
+                        <small style="color: #888; font-size: 10px;">${notif.date}</small>
+                    </li>`;
             });
-
-            if (dot) dot.style.display = 'block';
         }
-
-    }; 
+};
     function closeNotifications() {
         document.getElementById('notification-window').style.display = 'none';
     }
@@ -274,6 +278,7 @@ Released   : 20081009
     function logout() {
         sessionStorage.removeItem('loggedInUser');
         window.location.reload(); // Refresh to show Log In/Sign Up again
+        
     }
 
     function runInterestQuery(type) {
@@ -295,7 +300,7 @@ Released   : 20081009
         const query = document.getElementById('globalSearch').value.toLowerCase();
         const resultsSection = document.getElementById('searchResultsSection');
         const resultsContent = document.getElementById('resultsContent');
-        const missionContent = document.getElementById('contentColumn'); // Your main page text
+        const missionContent = document.getElementById('contentColumn');
 
         const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
 
@@ -308,7 +313,7 @@ Released   : 20081009
             const title = (item.title || "").toLowerCase();
             const category = (item.category || "").toLowerCase();
             const org = (item.org || "").toLowerCase();
-            const details = (item.details || item.notes || "").toLowerCase(); // Matches description words
+            const details = (item.details || item.notes || "").toLowerCase();
 
             return title.includes(query) || 
                 category.includes(query) || 
@@ -322,20 +327,34 @@ Released   : 20081009
         if (filtered.length > 0) {
             let html = '<div style="display: grid; gap: 20px;">';
             filtered.forEach(item => {
+                // --- NEW: THE APPLY BUTTON LOGIC ---
+                const applyUrl = `apply.html?job=${encodeURIComponent(item.title)}`;
+                
                 html += `
                     <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                         <h3 style="margin-top: 0; color: #9B1313;">${item.title}</h3>
                         <p style="margin: 5px 0;"><strong>Org:</strong> ${item.org} | <strong>Category:</strong> ${item.category}</p>
                         <p style="color: #555; font-style: italic;">"${item.details || item.notes || 'No description provided.'}"</p>
                         <p style="font-size: 12px; color: #888;">Location: ${item.location} | Date: ${item.date || 'N/A'}</p>
-                        <button onclick="alert('Contact ${item.contact} for info!')" style="background: #9B1313; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Learn More</button>
+                        
+                        <div style="margin-top: 15px;">
+                            <button onclick="alert('Contact ${item.contact || item.org} for info!')" 
+                                    style="background: #eee; color: #333; border: 1px solid #ccc; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+                                Learn More
+                            </button>
+                            
+                            <a href="${applyUrl}" 
+                            style="background: #9B1313; color: white; border: none; padding: 9px 20px; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; font-weight: bold; font-size: 13px;">
+                            Apply Now
+                            </a>
+                        </div>
                     </div>
                 `;
             });
             html += '</div>';
             resultsContent.innerHTML = html;
         } else {
-            resultsContent.innerHTML = `<p style="padding: 20px; background: #f8f8f8; border-left: 5px solid #9B1313;">No matches found for "${query}". Try different keywords like "Engineering" or "Code".</p>`;
+            resultsContent.innerHTML = `<p style="padding: 20px; background: #f8f8f8; border-left: 5px solid #9B1313;">No matches found for "${query}". Try different keywords.</p>`;
         }
     }
 

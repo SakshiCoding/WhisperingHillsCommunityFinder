@@ -5,12 +5,6 @@ body, #main, #contentColumn {
     color: #000000 !important;
 }
 
-/* Fix the header links (was white text on white background) */
-#header a, #header span {
-    color: #000000 !important;
-    font-weight: bold;
-}
-
 /* Fix headings and paragraphs */
 h1, h2, h3, p, li {
     color: #000000 !important;
@@ -60,35 +54,13 @@ padding-top:35px;
 
 #main
 {
-    width:800px;
+    width:900px;
     margin: 0 auto; 
     background-color: #FFFFFF;
     overflow: hidden;
     height:auto;
     padding-bottom:20px;
-}
-
-#header
-{
-color:#ffffff;
-clear:both;
-width:641px;
-height:25px;
-background-image:url(header_footer.png);
-background-repeat:no-repeat;
-text-align:right;
-line-height:25px;
-}
-
-#header a, #header a:visited, #header a:hover
-{
-font-size:12px;
-font-weight:bold;
-color:#FFFFFF;
-padding-left:12px;
-padding-right:5px;
-text-decoration:none;
-line-height:25px;
+   
 }
 
 #footer
@@ -113,30 +85,36 @@ text-decoration:none;
 line-height:25px;
 }
 
-
-
-
-#header a:hover { 
-color:#F2EAEA;
-border:none;
-}
-
 #contentColumn
 {
 float:left;
-width:550px !important;
+width:580px !important;
 padding: 20px 0;
 margin: 0;
 background-color: #FFFFFF !important;
+text-align: left;
 }
 
 #navColumn
 {
-float:left;
-width:200px;
+float:right;
+width:220px;
 padding-top:50px;
 margin: 0;
+text-align: right;
 }
+
+#navColumn ul {
+    list-style: none !important;
+    padding: 0 !important;
+}
+
+#navColumn li {
+    text-align: right !important;
+    background: none !important; /* Removes those little red key icons if they are in the way */
+    padding: 5px 0;
+}
+
 #contentColumn p
 {
 text-align:left;
@@ -249,25 +227,32 @@ body, #main {
     color: #000000 !important;
 }
 
-/* Fix the Header Bar */
 #header {
     width: 100%;
-    height: auto !important; /* Let it grow with the text */
     min-height: 35px;
-    background-color: #9B1313; /* Keep the red bar */
-    display: flex;
-    justify-content: space-between; /* Pushes Home/About left and LogIn right */
+    background-color: #9B1313;
+    display: flex !important;
+    justify-content: flex-end !important;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
-/* Fix Header Link Colors */
+/* Fixes the "Home" placement and spacing */
+#header a[href="index.html"] {
+    margin-right: auto !important;
+}
+
 #header a, #header span {
-    color: #FFFFFF !important; /* Keep header links white so they are visible on red */
-    font-weight: bold;
+    color: #FFFFFF !important ; /* Force white text so it's readable on red */
     text-decoration: none;
-    font-size: 12px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+#header a:hover {
+    color: #F2EAEA !important;
+    text-decoration: underline;
 }
 
 /* Fix the Main Content and Sidebar positioning */
@@ -332,4 +317,74 @@ h1, h2, h3, p, li, .subHeader h3 {
     clear: both;
     padding-top: 20px;
 }
+
+#universal-search-container {
+    width: 900px !important;
+    margin: 20px auto !important;
+}
+
+/* The container that holds the name and the menu */
+.user-menu {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+.user-menu > span {
+    color: #FFFFFF !important;
+    font-weight: bold;
+}
+
+.user-menu:hover .dropdown-content {
+    display: block;
+}
+
+/* 1. Target the Dropdown Box specifically */
+#header .user-menu .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #FFFFFF !important; 
+    background-color: #FFFFFF !important;
+    background-image: none !important; 
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border: 1px solid #9B1313 !important;
+    z-index: 9999;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+/* 2. Target the Links inside with maximum specificity */
+#header .user-menu .dropdown-content a {
+    color: #000000 !important; /* FORCED BLACK TEXT */
+    background: #FFFFFF !important;
+    background-image: none !important;
+    display: block !important;
+    width: auto !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    text-decoration: none !important;
+    line-height: normal !important;
+    text-align: left !important;
+    border-bottom: 1px solid #eee !important;
+}
+
+/* 3. Hover state */
+#header .user-menu .dropdown-content a:hover {
+    background-color: #f1f1f1 !important;
+    color: #9B1313 !important; /* Turns Maroon on hover */
+    border-bottom: 1px solid #9B1313 !important;
+}
+
+/* 4. Ensure the Hover trigger still works */
+#header .user-menu:hover .dropdown-content {
+    display: block !important;
+}
+
 

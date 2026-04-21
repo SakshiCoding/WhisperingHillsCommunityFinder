@@ -2,42 +2,127 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
-    <title>Application Queue</title>
+    <title>Application Management - Whispering Hills</title>
 </head>
 <body>
     <div id="main">
         <h1>Application Management</h1>
         <div id="header">
-            <a href="../Home Page/index.html">Back to Home</a>
+            <a href="../Home Page/index.html" style="float: right;">Back to Home</a>
         </div>
-        
-        <div id="contentColumn" style="width: 100%;">
+
+        <div id="listSection">
             <h2>Pending Applications</h2>
-            <div class="divider" style="width: 100%;"></div>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;">
-                <tr style="background: #9B1313; color: white;">
-                    <th style="padding: 10px;">Applicant Name</th>
-                    <th>Position</th>
-                    <th>Action</th>
+            <div class="divider"></div>
+            <table border="1" style="width:100%; border-collapse: collapse; margin-top: 20px;">
+                <tr style="background-color: #9B1313; color: white;">
+                    <th>Applicant Name</th><th>Position</th><th>Action</th>
                 </tr>
-                <tr>
-                    <td style="padding: 10px;">Eren Jaeger</td>
-                    <td>Software Engineer</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">Armin Arlert</td>
-                    <td>Event Coordinator</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">Mikasa Ackerman</td>
-                    <td>Director</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
+                <tbody id="appTableBody">
+                    </tbody>
             </table>
         </div>
+
+        <div id="reviewSection" style="display:none; text-align: left; padding: 20px;">
+            <h2>Review Application</h2>
+            <div class="divider"></div>
+            <h3 id="displayApplicant">Applicant: </h3>
+            <p id="displaySkills"><strong>Skills:</strong> </p>
+            <p id="displayResume"><strong>Resume Summary:</strong> </p>
+            
+            <br>
+            <label><strong>Decision:</strong></label>
+            <select id="decisionDropdown">
+                <option value="Pending Review">Pending Review</option>
+                <option value="Schedule Interview">Schedule Interview</option>
+                <option value="Accept Applicant">Accept Applicant</option>
+                <option value="Deny">Deny</option>
+            </select>
+            <br><br>
+            <button onclick="saveDecision()" style="background: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer;">Save Changes</button>
+            <button onclick="showList()" style="margin-left: 10px;">Return to List</button>
+        </div>
     </div>
+
+    <script>
+        // 1. Preset Application Data
+        const pendingApps = [
+            { id: "user1", name: "Mikasa Ackerman", position: "Director", skills: "Leadership, Strategic Planning", resume: "Years of experience in high-stakes coordination." },
+            { id: "eren1", name: "Eren Jaeger", position: "Software Engineer", skills: "Java, Python, C++", resume: "Focus on automated systems and freedom of data." },
+            { id: "armin1", name: "Armin Arlert", position: "Event Coordinator", skills: "Diplomacy, Planning", resume: "Expert in logistical strategy and oceanography." }
+        ];
+
+        let currentReviewingUser = null;
+
+        window.onload = function() {
+            renderTable();
+        };
+
+        function renderTable() {
+            const body = document.getElementById('appTableBody');
+            body.innerHTML = "";
+            pendingApps.forEach(app => {
+                body.innerHTML += `
+                    <tr>
+                        <td style="padding: 10px;">${app.name}</td>
+                        <td>${app.position}</td>
+                        <td><a href="#" onclick="openReview('${app.id}')" style="color: #9B1313;">View & Review</a></td>
+                    </tr>`;
+            });
+        }
+
+        function openReview(userId) {
+            const app = pendingApps.find(a => a.id === userId);
+            currentReviewingUser = app;
+
+            document.getElementById('listSection').style.display = 'none';
+            document.getElementById('reviewSection').style.display = 'block';
+            
+            document.getElementById('displayApplicant').innerText = "Applicant: " + app.name;
+            document.getElementById('displaySkills').innerHTML = "<strong>Skills:</strong> " + app.skills;
+            document.getElementById('displayResume').innerHTML = "<strong>Resume Summary:</strong> " + app.resume;
+        }
+
+        function showList() {
+            document.getElementById('listSection').style.display = 'block';
+            document.getElementById('reviewSection').style.display = 'none';
+        }
+
+       // 2. THE BIG DATABASE INTEGRATION
+        function saveDecision() {
+            const decision = document.getElementById('decisionDropdown').value;
+            
+            if (decision === "Pending Review") {
+                alert("Please select a final decision (Interview, Accept, or Deny).");
+                return;
+            }
+
+            if (!currentReviewingUser) {
+                alert("Error: No applicant selected.");
+                return;
+            }
+
+            // 1. Pull the Unified Notification Database
+            let allNotifications = JSON.parse(localStorage.getItem('allNotifications')) || [];
+            
+            // 2. Create the notification object
+            const recruiterNotif = {
+                recipient: currentReviewingUser.id.toLowerCase(), // Target "user1"
+                sender: "Recruiter",
+                type: "Application Update",
+                message: `Status update for ${currentReviewingUser.position}: ${decision}`,
+                date: new Date().toLocaleString()
+            };
+
+            // 3. Save to LocalStorage
+            allNotifications.push(recruiterNotif);
+            localStorage.setItem('allNotifications', JSON.stringify(allNotifications));
+            
+            alert(`Success! ${currentReviewingUser.name} has been notified of the decision: ${decision}`);
+            
+            // 4. Return to the list view
+            showList();
+        }
+    </script>
 </body>
 </html>

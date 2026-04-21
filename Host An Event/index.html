@@ -1,44 +1,73 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<title>Host Event - Whispering Hills Community Finder</title>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Host An Event - Whispering Hills</title>
+    <style>
+        form label { display: block; margin-top: 15px; font-weight: bold; }
+        form input, form textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; }
+    </style>
 </head>
 <body>
-	<div id="main">
-		<h1>Whispering Hills Community Finder</h1>
-		<div id="header">
-			<a href="../Home Page/index.html">Home</a>
-			<a href="../Home Page/index.html#about">About us</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
-		</div>
-		<div id="EventHostForm">
-			<h2>Host An Event</h2>
-			<div class="divider"></div>
-			<form id="eventForm" onsubmit="return validateEvent(event)">
-				<label for="eventname">Event Name</label>
-				<input type="text" id="eventname" name="eventname" required />
-				<label for="startdate">Event Start Date</label>
-				<input type="date" id="startdate" name="startdate" required />
-				<label for="location">Event Address</label>
-				<input type="text" id="location" name="location" required />
-				<label for="contactinfo">Contact Information</label>
-				<input type="text" id="contactinfo" name="contactinfo" required />
-				<label for="sponsorname">Sponsor Name</label>
-				<input type="text" id="sponsorname" name="sponsorname" required />
-				<label for="notes">Notes (Optional)</label>
-				<textarea id="notes" name="notes" rows="3"></textarea>
-				<input type="submit" value="Submit Event" />
-			</form>
-			<p id="errorMessage">Please fill in all required fields correctly.</p>
-		</div>
-	</div>
-	<div id="footer">
-		<a href="http://www.bryantsmith.com/template">free css template</a> by <a href="http://www.bryantsmith.com">florida web design</a>
-	</div>
-	<script src="event.js"></script>
-	<script src="../shared/auth-nav.js"></script>
+    <div id="main">
+        <h1>Host An Event</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Back to Home</a>
+        </div>
+
+        <div id="contentColumn" style="width: 100%; padding: 20px; text-align: left;">
+            <form id="eventForm" onsubmit="submitEvent(event)">
+                <label>Event Name</label>
+                <input type="text" id="eventName" placeholder="July 4th Picnic at the Park" required>
+
+                <label>Event Start Date</label>
+                <input type="date" id="eventDate" required>
+
+                <label>Event Address</label>
+                <input type="text" id="eventAddress" placeholder="Woodland Hills Central Park" required>
+
+                <label>Contact Information</label>
+                <input type="text" id="contactInfo" placeholder="Jason Roberts, 573-555-2222" required>
+
+                <label>Sponsor Name</label>
+                <input type="text" id="sponsorName" placeholder="City Park District" required>
+
+                <label>Notes (Optional)</label>
+                <textarea id="eventNotes" rows="3" placeholder="Bring a lawn chair"></textarea>
+
+                <button type="submit" style="background: #9B1313; color: white; padding: 10px 20px; border: none; margin-top: 20px; cursor: pointer; font-weight: bold;">
+                    Submit Event
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+		function submitEvent(e) {
+			e.preventDefault();
+
+			const newEvent = {
+				title: document.getElementById('eventName').value,
+				date: document.getElementById('eventDate').value,
+				location: document.getElementById('eventAddress').value,
+				contact: document.getElementById('contactInfo').value,
+				org: document.getElementById('sponsorName').value,
+				details: document.getElementById('eventNotes').value,
+				status: "Pending" 
+			};
+
+			// 1. Pull the Vetting Queue specifically
+			let vettingQueue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+			
+			// 2. Add the new event
+			vettingQueue.push(newEvent);
+			
+			// 3. Save it back
+			localStorage.setItem('vettingQueue', JSON.stringify(vettingQueue));
+
+			alert("Event submitted! It is now in the Vetting Queue for volunteer review.");
+			window.location.href = "../Home Page/index.html";
+		}
+    </script>
 </body>
 </html>

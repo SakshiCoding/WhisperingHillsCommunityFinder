@@ -1,9 +1,9 @@
-const VALID_USERNAMES = ['user1', 'admin1'];
+const VALID_USERNAMES = ['user1', 'admin1', 'recruiter1', 'volunteer1'];
 const USERS = {
 	'user1': { password: 'CNIT280', label: 'user1 (Client)'},
 	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'},
 	'recruiter1': { password: 'CNIT280', label: 'recruiter1 (Recruiter)'},
-	'volunteer1': { password: 'CNIT280', label: 'volunteer1(Volunteer) '}
+	'volunteer1': { password: 'CNIT280', label: 'volunteer1(Volunteer) '},
 };
 
 const VALID_USERNAME = 'user1';
