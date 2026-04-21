@@ -1,0 +1,62 @@
+<div id="header">
+    <a href="../Home Page/index.html">Home</a>
+    <span>Vetting Queue</span>
+</div>
+<div id="main">
+    <h2>Pending Inquiries</h2>
+    <div id="pending-list">
+        </div>
+</div>
+
+<script>
+    // Mock database of pending inquiries
+    let inquiries = [
+        { id: 1, name: "Special Needs Summer Camp", details: "Looking for web support \n Phone Number: 123-456-7890 \n Email: abc@gmail.com", status: "pending" },
+        { id: 2, name: "Community Outreach", details: "Form submission for event \n Phone Number: 676-767-6767 \n email: xyz@outlook.com", status: "pending" }
+    ];
+
+    function renderQueue() {
+        const list = document.getElementById('pending-list');
+        list.innerHTML = '';
+        inquiries.filter(i => i.status === 'pending').forEach(item => {
+            list.innerHTML += `
+                <div class="inquiry-card">
+                    <p><strong>${item.name}</strong>: ${item.details}</p>
+                    <button onclick="approve(${item.id})">Mark Legitimate</button>
+                    <button onclick="reject(${item.id})" style="background:grey;">Reject</button>
+                </div>
+            `;
+        });
+    }
+
+    function approve(id) {
+        // Typical Course 7: System saves and flags as legitimate
+        let record = inquiries.find(i => i.id === id);
+        record.status = 'legitimate';
+        
+        // Save to "Database" (localStorage)
+        let approved = JSON.parse(localStorage.getItem('approvedData') || '[]');
+        approved.push(record);
+        localStorage.setItem('approvedData', JSON.stringify(approved));
+        
+        renderQueue();
+        alert("Record flagged as legitimate and moved to database.");
+    }
+
+    renderQueue();
+
+    function reject(id) {
+    // Alternate Course 5a: Volunteer identifies submission as illegitimate
+    const index = inquiries.findIndex(i => i.id === id);
+    
+    if (index !== -1) {
+        // Alternate Course 5b: System removes inquiry
+        inquiries.splice(index, 1); 
+        
+        // Typical Course Step 2: System displays unchecked inquiries (refreshed list)
+        renderQueue(); 
+        
+        alert("Inquiry rejected. The submission has been removed from the system.");
+    }
+}
+</script>

@@ -1,7 +1,9 @@
 const VALID_USERNAMES = ['user1', 'admin1'];
 const USERS = {
 	'user1': { password: 'CNIT280', label: 'user1 (Client)'},
-	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'}
+	'admin1': { password: 'CNIT280', label: 'admin1 (Administrator)'},
+	'recruiter1': { password: 'CNIT280', label: 'recruiter1 (Recruiter)'},
+	'volunteer1': { password: 'CNIT280', label: 'volunteer1(Volunteer) '}
 };
 
 function validateLogin(event) {
@@ -13,9 +15,11 @@ function validateLogin(event) {
 
 	if (VALID_USERNAMES.includes(username) && USERS[username] && USERS[username].password === password) {
 		localStorage.setItem('whcfUser', username);
-		sessionStorage.setItem('loggedInUser', USERS[username].label);
+	if (USERS[username] && USERS[username].password === password) {
+		sessionStorage.setItem('loggedInUser', USERS[username].label)
 		window.location.href = '../Home Page/index.html';
 		return false;
+
 	}
 
 	errorMessage.style.display = 'block';

@@ -24,18 +24,35 @@ Released   : 20081009
   <div id="main" class="whcf-home-layout">
   	<h1>Whispering Hills Community Finder</h1>
   	<div id="header">
-    	<a href="#">Home</a>
-        <a href="#">About us</a>
-        <a href = "#" id = "notification-btn" style = "position:relative;">
-            Notifications
-            <span id  = "notification-dot"></span>
-        </a>
+    	 <a href="index.html">Home</a>
+         <a href="#about">About us</a>
 
-        <span id="auth-links">
-            <a href="../Login Page/index.html">Log In</a>
-            <a href="#">Sign Up</a>
-        </span>
-    </div>
+         <span id="volunteer-tools" style="display: none;">
+         <a href="../Volunteer Page/vetting.html" style="color: #FFD700;">Vetting Queue</a>
+         </span>
+
+         <div id="notification-area" style="display: none; position: relative; vertical-align: top;"> 
+            <a href="#" id="notification-btn">Notifications</a>
+            <span id="notification-dot"></span>
+            
+            <div id="notification-window"> 
+                <h3>Recommended for You</h3>
+                <div class="divider" style="width: 100%;"></div>
+                <ul id="job-list">
+                    <li><strong>Junior Web Developer</strong><br>XYZ Tech</li>
+                    <li><strong>Event Coordinator</strong><br>ABC Organization</li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech has recieved your application</strong></li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
+                </ul>
+                <button onclick="closeNotifications()">Close</button>
+            </div>
+        </div>    
+       
+    <span id="auth-links">
+        <a href="../Login Page/index.html">Log In</a>
+        <a href="#">Sign Up</a>
+    </span>
+</div>
     <div id="contentColumn">
 		
   <!-- This is an entry, copy and paste it to create a new one -->      
@@ -85,21 +102,104 @@ Released   : 20081009
     window.onload = function() {
         const userLabel = sessionStorage.getItem('loggedInUser');
         const authContainer = document.getElementById('auth-links');
+        const dot = document.getElementById('notification-dot'); 
+        const notifyWindow = document.getElementById('notification-window'); 
+        const notificationArea = document.getElementById('notification-area'); 
+        const jobList = document.getElementById('job-list');
+
+        console.log('Logged in user:', userLabel); 
+
 
         if (userLabel && authContainer) {
+            if(notificationArea){
+                notificationArea.style.display = 'inline-block'; // Show notifications if user is logged in
+            }
+
             // Replace the Log In/Sign Up links with the user label and a Logout button
             authContainer.innerHTML = `
                 <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
                 <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
             `;
+
+            // Requirement 502: Only Clients see the Notification button
+         if (userLabel.toLowerCase().includes('client')) {
+         if (notificationArea) notificationArea.style.display = 'inline-block';
+         if (dot) dot.style.display = 'block';
+         } 
+    
+        // Requirement 501: Only Volunteers see the Vetting Queue link
+         else if (userLabel.toLowerCase().includes('volunteer')) {
+         const volTools = document.getElementById('volunteer-tools');
+         if (volTools) {
+            volTools.style.display = 'inline-block'; // Typical Course Step 1
+             }
+         }
+        
+            if(userLabel.toLowerCase().includes('client')){
+                if(notificationArea){
+                    notificationArea.style.display = 'inline-block'; 
+                }
+
+                if(dot){
+                    dot.style.display = 'block'; 
+                }    
+                dot.style.display = 'block'; // Show the notification dot for clients
+            }
+            else{
+                if(notificationArea){
+                    notificationArea.style.display = 'none'; 
+                }
+            }
         }
-    };
+
+        const btn = document.getElementById('notification-btn');
+
+        if(btn && notifyWindow){
+            btn.onclick = function(e){
+                e.preventDefault(); 
+                const isCurrentlyVisible = notifyWindow.style.display === 'block';
+                notifyWindow.style.display = isCurrentlyVisible ? 'none' : 'block'; 
+
+                if(dot) dot.style.display = 'none'; 
+            };
+        }
+
+        if(userLabel && authContainer){
+            let recruiterLink = ""; 
+
+            if(userLabel.toLowerCase().includes('recruiter')){
+                recruiterLink = `<a href="../Applications/list.html">Applications</a>`;
+            }
+
+            authContainer.innerHTML = ` 
+                ${recruiterLink}
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+            `;
+        }
+
+        if (approvedData.length > 0) {
+            jobList.innerHTML = ''; // Clear hardcoded mock data
+            approvedData.forEach(item => {
+                // System displays only approved records
+                jobList.innerHTML += `<li><strong>${item.name}</strong><br>${item.details}</li>`;
+            });
+            document.getElementById('notification-dot').style.display = 'block';
+        }
+
+    }; 
+    function closeNotifications() {
+        document.getElementById('notification-window').style.display = 'none';
+    }
+zz
 
     function logout() {
         sessionStorage.removeItem('loggedInUser');
         window.location.reload(); // Refresh to show Log In/Sign Up again
     }
-    </script>
+</script>
+        
+        
   
 </div>
 <!-- Please leave the link(s) in the footer, but please do modify it in any other way you please -->
