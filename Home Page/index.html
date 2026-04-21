@@ -25,8 +25,16 @@ Released   : 20081009
   	<h1>Whispering Hills Community Finder</h1>
   	<div id="header">
     	<a href="#">Home</a>
-        <a href="../Login Page/index.html">Log In</a>
-        <a href="#">Sign Up</a>
+        <a href="#">About us</a>
+        <a href = "#" id = "notification-btn" style = "position:relative;">
+            Notifications
+            <span id  = "notification-dot"></span>
+        </a>
+
+        <span id="auth-links">
+            <a href="../Login Page/index.html">Log In</a>
+            <a href="#">Sign Up</a>
+        </span>
     </div>
     <div id="contentColumn">
 		
@@ -73,6 +81,25 @@ Released   : 20081009
 
   </div>
   
+  <script>
+    window.onload = function() {
+        const userLabel = sessionStorage.getItem('loggedInUser');
+        const authContainer = document.getElementById('auth-links');
+
+        if (userLabel && authContainer) {
+            // Replace the Log In/Sign Up links with the user label and a Logout button
+            authContainer.innerHTML = `
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+            `;
+        }
+    };
+
+    function logout() {
+        sessionStorage.removeItem('loggedInUser');
+        window.location.reload(); // Refresh to show Log In/Sign Up again
+    }
+    </script>
   
 </div>
 <!-- Please leave the link(s) in the footer, but please do modify it in any other way you please -->
