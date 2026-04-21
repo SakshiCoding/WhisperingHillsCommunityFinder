@@ -6,9 +6,6 @@ const USERS = {
 	'volunteer1': { password: 'CNIT280', label: 'volunteer1(Volunteer) '}
 };
 
-const VALID_USERNAME = 'user1';
-const VALID_PASSWORD = 'CNIT280';
-
 function validateLogin(event) {
 	event.preventDefault();
 
@@ -16,7 +13,7 @@ function validateLogin(event) {
 	const password = document.getElementById('password').value;
 	const errorMessage = document.getElementById('errorMessage');
 
-	if (VALID_USERNAMES.includes(username) && password === VALID_PASSWORD) {
+	if (VALID_USERNAMES.includes(username) && USERS[username] && USERS[username].password === password) {
 		localStorage.setItem('whcfUser', username);
 	if (USERS[username] && USERS[username].password === password) {
 		sessionStorage.setItem('loggedInUser', USERS[username].label)
