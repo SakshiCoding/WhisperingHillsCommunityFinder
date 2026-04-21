@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Review Application</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Review Application</h1>
+        <div id="header">
+            <a href="list.html">Return to List</a>
+        </div>
+        
+        <div id="contentColumn" style="width: 100%; padding: 20px; text-align: left;">
+            <h3>Applicant: Jane Doe</h3>
+            <div class="divider" style="width: 100%;"></div>
+            
+            <p><strong>Skills:</strong> HTML, CSS, JavaScript, Python</p>
+            <p><strong>Resume Summary:</strong> 13 years of experience in software engineering. Graduated at Purdue University. Previously employed at XYZ Company</p>
+            
+            <br>
+            <form onsubmit="return saveStatus(event)">
+                <label style="font-weight: bold;">Decision:</label>
+                <select id="status" style="padding: 5px; margin-left: 10px;">
+                    <option value="pending">Pending Review</option>
+                    <option value="interview">Schedule Interview</option>
+                    <option value="accept">Accept Applicant</option>
+                    <option value="deny">Deny</option>
+                </select>
+                <br><br>
+                <button type="submit" style="background: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold;">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function saveStatus(e) {
+            e.preventDefault();
+            const status = document.getElementById('status').value;
+            alert('Status successfully updated to: ' + status);
+            
+            // Redirect back to the list page
+            window.location.href = 'list.html';
+            return false;
+        }
+    </script>
+</body>
+</html>
