@@ -44,16 +44,19 @@ height:auto;
 padding-bottom:20px;
 }
 
+
+
 #header
 {
 color:#ffffff;
 clear:both;
 width:641px;
-height:25px;
+height:30px;
 background-image:url(header_footer.png);
 background-repeat:no-repeat;
 text-align:right;
-line-height:25px;
+line-height:30px;
+overflow: visible !important ;
 }
 
 #header a, #header a:visited, #header a:hover
@@ -214,3 +217,126 @@ color:#9B1313;
 border-bottom:dashed 1px #DD6A6A;
 }
 
+/*user dropdown*/
+/* Container for name + menu */
+.user-menu {
+    position: relative;
+    display: inline-block !important;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+#header .user-menu .dropdown-content {
+    display: none; 
+    position: absolute;
+    right: 0;
+    top: 25px; 
+    background-color: #ffffff !important;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    border: 1px solid #9B1313;
+    z-index: 9999 !important; 
+}
+.username-trigger {
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+/* Links inside the dropdown */
+#header .user-menu .dropdown-content a {
+    color: #333333 !important;
+    padding: 12px 16px !important;
+    text-decoration: none !important;
+    display: block !important;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+#header .user-menu .dropdown-content a:last-child {
+    border-bottom: none; /* Clean look for the last item */
+}
+
+#header .user-menu .dropdown-content a:hover {
+    background-color: #f1f1f1 !important;
+    color: #9B1313 !important;
+}
+
+/* Show menu on hover */
+.user-menu:hover .dropdown-content {
+    display: block !important;
+}
+
+/*search bar*/
+.search-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-card h3 {
+    margin-top: 0;
+    color: #9B1313 !important;
+}
+
+#searchResultsSection {
+    width: 580px !important;
+    background-color: #FFFFFF;
+    padding-top: 20px;
+}
+
+#universal-search-container {
+    width: 100%;
+    clear: both;           
+    display: block;
+    text-align: center;    
+    padding: 30px 0;        
+    margin: 0 auto;
+}
+
+#globalSearch {
+    display: inline-block;
+    width: 60%;
+    max-width: 500px;
+    height: 34px;           
+    padding: 0 20px;        
+    font-size: 13px;        
+    
+    border: 1px solid #9B1313; 
+    border-radius: 20px;      
+    outline: none;
+    box-sizing: border-box;
+}
+
+#globalSearch:focus {
+    box-shadow: 0 0 10px rgba(155, 19, 19, 0.2);
+    border-color: #7a0f0f;
+}
+
+/* Style the placeholder text */
+#globalSearch::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+#dynamic-nav-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+#dynamic-nav-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #9B1313;
+}
+
+#dynamic-nav-list strong {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}

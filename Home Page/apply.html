@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Job Application - Whispering Hills</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Whispering Hills Community Finder</h1>
+        <div id="header">
+            <a href="index.html">Home</a>
+            <span id="auth-links"></span>
+        </div>
+        
+        <div id="contentColumn" style="width: 100% !important; float: none; margin: 0 auto; max-width: 800px;">
+            <a href="index.html" style="color: #9B1313; text-decoration: none;">← Back to Home</a>
+            <h2 id="applyTitle">Application</h2>
+            <div class="divider"></div>
+
+            <form id="applicationForm" onsubmit="submitApplication(event)" style="text-align: left; padding: 20px; background: #fff; border: 1px solid #ddd; margin-top: 20px;">
+                <p><strong>Applicant Type</strong></p>
+                <label><input type="radio" name="type" value="Client" checked> Client</label><br>
+                <label><input type="radio" name="type" value="Volunteer"> Volunteer</label><br>
+                <label><input type="radio" name="type" value="Guardian"> Guardian</label><br><br>
+
+                <label>Full Name *</label><br>
+                <input type="text" id="appName" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;" required><br>
+
+                <label>Email *</label><br>
+                <input type="email" id="appEmail" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;" required><br>
+
+                <label>Phone *</label><br>
+                <input type="text" id="appPhone" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;" required><br>
+
+                <label>Skillset *</label><br>
+                <input type="text" id="appSkill" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;" required><br>
+
+                <label>Previous Experience</label><br>
+                <textarea id="appExp" style="width: 100%; height: 100px; margin: 5px 0 15px 0;"></textarea><br>
+
+                <label>Preferred Start Date</label><br>
+                <input type="date" id="startDate" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;"><br>
+
+                <label>End Date (Optional)</label><br>
+                <input type="date" id="endDate" style="width: 100%; padding: 8px; margin: 5px 0 15px 0;"><br>
+
+                <button type="submit" style="background: #9B1313; color: white; padding: 10px 25px; border: none; cursor: pointer; font-weight: bold;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 1. Get Job Info from URL
+        const params = new URLSearchParams(window.location.search);
+        const jobTitle = params.get('job');
+        if(jobTitle) document.getElementById('applyTitle').innerText = "Application for: " + jobTitle;
+
+        function submitApplication(e) {
+            e.preventDefault();
+            
+            const params = new URLSearchParams(window.location.search);
+            const rawJobTitle = params.get('job'); 
+
+            if (!rawJobTitle) {
+                alert("Error: No job title found in request.");
+                return;
+            }
+
+            // --- THE CRITICAL FIX: DECODE THE TITLE ---
+            // This turns "Junior%20Web%20Developer" back into "Junior Web Developer"
+            const jobTitleFromURL = decodeURIComponent(rawJobTitle); 
+
+            const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+            const currentJob = allOpps.find(o => o.title === jobTitleFromURL);
+
+            if (currentJob && currentJob.endDate) {
+                const expiry = new Date(currentJob.endDate);
+                if (expiry < new Date().setHours(0,0,0,0)) {
+                    alert("Sorry, this opportunity has expired and is no longer accepting applications.");
+                    window.location.href = "index.html";
+                    return; // Stop the application from being created
+                }
+            }
+            
+            // Find the recruiter
+            const jobData = allOpps.find(o => 
+                o.title.trim().toLowerCase() === jobTitleFromURL.trim().toLowerCase()
+            );
+
+            let recruiter = "";
+
+            if (!jobData) {
+                alert("CRITICAL ERROR: The title '" + jobTitleFromURL + "' does not exist in your database. Check for typos!");
+                recruiter = "admin1"; 
+            } else if (!jobData.recruiterID) {
+                alert("DATA ERROR: Found the job, but the field 'recruiterID' is missing inside it!");
+                recruiter = "admin1";
+            } else {
+                recruiter = jobData.recruiterID; // SUCCESS case
+            }
+
+            const userLabel = sessionStorage.getItem('loggedInUser') || "guest";
+            const username = userLabel.split(' ')[0].toLowerCase();
+
+            const newApp = {
+                id: Date.now(),
+                applicantName: document.getElementById('appName').value,
+                applicantUsername: username,
+                position: jobTitleFromURL,
+                skills: document.getElementById('appSkill').value,
+                experience: document.getElementById('appExp').value,
+                recruiterID: recruiter, 
+                status: "Pending Review",
+                startDate: document.getElementById('startDate').value, 
+                endDate: document.getElementById('endDate').value
+            };
+
+            let apps = JSON.parse(localStorage.getItem('allApplications')) || [];
+            apps.push(newApp);
+            localStorage.setItem('allApplications', JSON.stringify(apps));
+
+            alert("Application successfully sent to: " + recruiter);
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

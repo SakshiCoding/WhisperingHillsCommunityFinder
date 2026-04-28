@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Client Profile - Administrator View</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Client Management System</h1>
+        <div id="header">
+            <a href="index.html">Back to Management</a>
+            <a href="../Home Page/index.html">Home</a>
+        </div>
+        
+        <div id="contentColumn" style="width: 100%; text-align: center;">
+            <h2 id="clientName">Loading Client Profile...</h2>
+            <div class="divider" style="margin: 0 auto 20px auto;"></div>
+            
+            <div id="profileDetails" style="text-align: left; padding: 25px; background: #fff; border: 1px solid #ccc; display: inline-block; min-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+            </div>
+            
+            <br />
+            <button onclick="window.history.back()" style="margin-top: 20px; padding: 8px 20px; cursor: pointer;">Return to Client List</button>
+        </div>
+    </div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUser = urlParams.get('user'); // e.g., "user1"
+
+    const nameHeader = document.getElementById('clientName');
+    const detailsDiv = document.getElementById('profileDetails');
+
+    // 1. Pull from the user database
+    const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+    let userData = null;
+
+    // 2. Locate User Data
+    if (targetUser && userDb[targetUser]) {
+        userData = userDb[targetUser];
+    }
+
+    // 3. Display Client Data
+    if (userData) {
+        nameHeader.innerText = "Client: " + userData.fname + " " + userData.lname;
+        
+        detailsDiv.innerHTML = `
+            <p><strong>Username:</strong> ${targetUser}</p>
+            <p><strong>Email Address:</strong> ${userData.email}</p>
+            <p><strong>Career Interests:</strong> ${userData.interests}</p>
+            <p><strong>Skillset/Background:</strong> ${userData.resume || 'No background provided'}</p>
+            
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 2px dashed #9B1313;">
+                <h3 style="color: #9B1313; font-size: 14px; margin-bottom: 10px;">Send Job Recommendation</h3>
+                <input type="text" id="opportunityInput" placeholder="Enter Job or Event title..." 
+                    style="padding: 10px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+                
+                <button onclick="notifyClient()" 
+                        style="background-color: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; border-radius: 4px; margin-left: 5px;">
+                    Send Alert
+                </button>
+            </div>
+        `;
+    } else {
+        nameHeader.innerText = "Client Record Not Found";
+        detailsDiv.innerHTML = `<p>Error: Could not retrieve data for the requested user ID.</p>`;
+    }
+
+    function notifyClient() {
+        const oppName = document.getElementById('opportunityInput').value.trim();
+        const urlParams = new URLSearchParams(window.location.search);
+        const target = urlParams.get('user'); 
+
+        if (!oppName) return alert("Please enter an opportunity name.");
+        if (!target) return alert("Error: User ID missing from URL.");
+
+        // Pull the notification database
+        let db = JSON.parse(localStorage.getItem('allNotifications')) || [];
+        
+        const newEntry = {
+            recipient: target.toLowerCase(),
+            sender: "Administrator",
+            type: "Job Recommendation",
+            message: `The Administrator has recommended a new opportunity for you: ${oppName}`,
+            date: new Date().toLocaleString()
+        };
+
+        db.push(newEntry);
+        localStorage.setItem('allNotifications', JSON.stringify(db));
+        
+        alert(`Success! Opportunity alert sent to ${userData.fname}.`);
+        document.getElementById('opportunityInput').value = "";
+    }
+</script>
+</body>
+</html>

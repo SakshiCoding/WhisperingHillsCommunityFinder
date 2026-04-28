@@ -4,6 +4,42 @@
  */
 var JOB_OPPORTUNITIES = [];
 
+/**
+ * BRIDGING SCRIPT
+ * This connects your specific Job pages to the global database
+ */
+
+function getStoredJobOpportunities() {
+    // This pulls the data we've been using in the Home Page and Admin pages
+    return JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+}
+
+function whcfJobRowIsCurrent(row) {
+    // If the job date is today or in the future, it stays in "Job Opportunities"
+    if (!row.date) return true; 
+    const today = new Date().toISOString().split('T')[0];
+    return row.date >= today;
+}
+
+function whcfJobRowIsExpired(row) {
+    // If the job date has passed, it moves to "Job Opportunity History"
+    if (!row.date) return false;
+    const today = new Date().toISOString().split('T')[0];
+    return row.date < today;
+}
+
+function whcfRowToDisplayJob(row) {
+    // This maps the names from your database (org/details) 
+    // to the names your jobs.js expects (organization/summary)
+    return {
+        title: row.title || 'Untitled Role',
+        organization: row.org || row.organization || 'N/A',
+        location: row.location || 'N/A',
+        summary: row.details || row.notes || '',
+        date: row.date || ''
+    };
+}
+
 function escapeHtml(text) {
 	if (text == null) {
 		return '';
@@ -64,22 +100,26 @@ function renderJobOpportunities() {
 	emptyEl.style.display = 'none';
 	listEl.style.display = 'block';
 
+	// Inside Job Opportunities/jobs.js -> renderJobOpportunities function
+
 	allJobs.forEach(function (job) {
-		var li = document.createElement('li');
-		var parts = [];
-		parts.push('<span class="job-title">' + escapeHtml(job.title || 'Untitled role') + '</span>');
-		if (job.organization) {
-			parts.push('<span class="job-meta">' + escapeHtml(job.organization) + '</span>');
-		}
-		if (job.location) {
-			parts.push('<span class="job-meta">' + escapeHtml(job.location) + '</span>');
-		}
-		if (job.summary) {
-			parts.push('<p class="job-meta" style="margin-top:6px;">' + escapeHtml(job.summary) + '</p>');
-		}
-		li.innerHTML = parts.join('<br />');
-		listEl.appendChild(li);
+    var li = document.createElement('li');
+    li.style.borderBottom = "1px solid #ddd";
+    li.style.padding = "15px 0";
+
+    // We only include the text fields. 
+    // Notice there is NO mention of applyUrl here.
+    var html = `
+        <span class="job-title" style="color: #9B1313; font-weight: bold; font-size: 1.2em;">${escapeHtml(job.title)}</span><br />
+        <span class="job-meta"><strong>Org:</strong> ${escapeHtml(job.organization)}</span><br />
+        <span class="job-meta"><strong>Location:</strong> ${escapeHtml(job.location)}</span><br />
+        <p style="margin-top:6px;">${escapeHtml(job.summary)}</p>
+    `;
+    
+    li.innerHTML = html;
+    listEl.appendChild(li);
 	});
 }
+
 
 document.addEventListener('DOMContentLoaded', renderJobOpportunities);

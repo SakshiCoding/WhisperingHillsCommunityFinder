@@ -1,62 +1,125 @@
-<div id="header">
-    <a href="../Home Page/index.html">Home</a>
-    <span>Vetting Queue</span>
-</div>
-<div id="main">
-    <h2>Pending Inquiries</h2>
-    <div id="pending-list">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Volunteer Vetting Queue</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Volunteer Vetting Portal</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Home</a>
+            <span id="auth-links"></span>
         </div>
-</div>
+
+        <div id="contentColumn" style="width: 100%;">
+            <h2>Pending Approval Queue</h2>
+            <div class="divider"></div>
+            
+            <div id="pending-list">
+                <p>Checking for pending submissions...</p>
+            </div>
+        </div>
+    </div>
 
 <script>
-    // Mock database of pending inquiries
-    let inquiries = [
-        { id: 1, name: "Special Needs Summer Camp", details: "Looking for web support \n Phone Number: 123-456-7890 \n Email: abc@gmail.com", status: "pending" },
-        { id: 2, name: "Community Outreach", details: "Form submission for event \n Phone Number: 676-767-6767 \n email: xyz@outlook.com", status: "pending" }
-    ];
+
+    const userLabel = sessionStorage.getItem('loggedInUser');
+    if (userLabel) {
+        document.getElementById('auth-links').innerHTML = `
+            <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+        `;
+    }
+
+    // 1. Initial Render on Page Load
+    window.onload = renderQueue;
 
     function renderQueue() {
         const list = document.getElementById('pending-list');
-        list.innerHTML = '';
-        inquiries.filter(i => i.status === 'pending').forEach(item => {
+        // Retrieve the queue from localStorage
+        const queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+
+        if (queue.length === 0) {
+            list.innerHTML = "<p>The vetting queue is currently empty.</p>";
+            return;
+        }
+
+        list.innerHTML = "";
+        queue.forEach((item, index) => {
             list.innerHTML += `
-                <div class="inquiry-card">
-                    <p><strong>${item.name}</strong>: ${item.details}</p>
-                    <button onclick="approve(${item.id})">Mark Legitimate</button>
-                    <button onclick="reject(${item.id})" style="background:grey;">Reject</button>
+                <div class="search-card" style="border: 1px solid #9B1313; padding: 15px; margin-bottom: 15px;">
+                    <h3>${item.title || item.name}</h3>
+                    <p><strong>Proposed By:</strong> ${item.org || 'Unknown'}</p>
+                    <p><strong>Details:</strong> ${item.details || 'No details provided'}</p>
+                    <p><strong>Location:</strong> ${item.location || 'N/A'}</p>
+                    <br>
+                    <button onclick="legitimize(${index})" style="background: green; color: white; border: none; padding: 10px; cursor: pointer;">Mark Legitimate</button>
+                    <button onclick="reject(${index})" style="background: #333; color: white; border: none; padding: 10px; margin-left: 10px; cursor: pointer;">Reject</button>
                 </div>
             `;
         });
     }
 
-    function approve(id) {
-        // Typical Course 7: System saves and flags as legitimate
-        let record = inquiries.find(i => i.id === id);
-        record.status = 'legitimate';
+    function validateEvent(e) {
+        e.preventDefault();
         
-        // Save to "Database" (localStorage)
-        let approved = JSON.parse(localStorage.getItem('approvedData') || '[]');
-        approved.push(record);
-        localStorage.setItem('approvedData', JSON.stringify(approved));
-        
-        renderQueue();
-        alert("Record flagged as legitimate and moved to database.");
+        const newOpportunity = {
+            title: document.getElementById('eventname').value,
+            category: document.getElementById('category') ? document.getElementById('category').value : "General",
+            type: document.getElementById('type') ? document.getElementById('type').value : "Social",
+            org: document.getElementById('orgname').value,
+            location: document.getElementById('location').value,
+            contact: document.getElementById('contactinfo').value,
+            details: document.getElementById('notes').value,
+            date: new Date().toLocaleDateString(),
+            status: "Pending Vetting" // Mark as pending
+        };
+
+        // SAVE TO VETTING QUEUE INSTEAD OF GLOBAL
+        let vettingQueue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+        vettingQueue.push(newOpportunity);
+        localStorage.setItem('vettingQueue', JSON.stringify(vettingQueue));
+
+        alert("Submission received! A volunteer will vet this opportunity before it goes live.");
+        document.getElementById('eventForm').reset();
+        return false;
     }
 
-    renderQueue();
+    function legitimize(index) {
+        let queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+        let globalOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
 
-    function reject(id) {
-    // Alternate Course 5a: Volunteer identifies submission as illegitimate
-    const index = inquiries.findIndex(i => i.id === id);
-    
-    if (index !== -1) {
-        // Alternate Course 5b: System removes inquiry
-        inquiries.splice(index, 1); 
-        
-        // Typical Course Step 2: System displays unchecked inquiries (refreshed list)
-        renderQueue(); 
-        
-        alert("Inquiry rejected. The submission has been removed from the system.");
+        if (queue[index]) {
+            const approvedItem = queue[index];
+            approvedItem.status = "Legitimate";
+
+            // The recruiterID is already inside approvedItem because we added it in Step 1!
+            globalOpps.push(approvedItem);
+            
+            localStorage.setItem('globalOpportunities', JSON.stringify(globalOpps));
+            queue.splice(index, 1);
+            localStorage.setItem('vettingQueue', JSON.stringify(queue));
+
+            alert("Opportunity is now live and correctly linked to its recruiter.");
+            renderQueue();
+        }
     }
-}
+
+    function reject(index) {
+        if (confirm("Are you sure you want to reject this inquiry?")) {
+            let queue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+            
+            // Remove the item from the array
+            queue.splice(index, 1);
+            
+            // Update localStorage and refresh the UI
+            localStorage.setItem('vettingQueue', JSON.stringify(queue));
+            renderQueue();
+            alert("Inquiry rejected and removed from system.");
+        }
+    }
 </script>
+
+</body>
+</html>

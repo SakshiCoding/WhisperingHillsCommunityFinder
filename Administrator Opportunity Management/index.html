@@ -1,57 +1,382 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<title>Administrator Opportunity Management - Whispering Hills Community Finder</title>
+	<style>
+    /* Force sections to stack vertically */
+    #EventHostForm, #AdminQuerySection, #ViewAllSection {
+        width: 100% !important;
+        float: none !important;
+        clear: both;
+        padding: 20px 0;
+        text-align: left;
+    }
+
+    /* Style the form labels and inputs to look professional */
+    #eventForm label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    #eventForm input[type="text"], 
+    #eventForm input[type="date"], 
+    #eventForm select, 
+    #eventForm textarea {
+        width: 100%;
+        max-width: 500px;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box; /* Prevents overflow */
+    }
+
+    /* Fix the button cluster in the query section */
+    .query-buttons button {
+        margin: 5px 5px 5px 0;
+        padding: 10px 15px;
+        cursor: pointer;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .query-buttons button:hover {
+        background-color: #ddd;
+    }
+
+    #allOpportunitiesList table {
+        margin-top: 20px;
+        background-color: white;
+    }
+</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Administrator Opportunity Management - Whispering Hills</title>
 </head>
 <body>
-	<div id="main">
-		<h1>Whispering Hills Community Finder</h1>
-		<div id="header">
-			<a href="../Home Page/index.html">Home</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
-		</div>
+    <div id="main">
+        <h1>Whispering Hills Community Finder</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Home</a>
+            <span id="auth-links"></span>
+        </div>
 
-		<!-- External opportunity input section (based on Host An Event) -->
-		<div id="EventHostForm">
-			<h2>Job Opportunity Submission</h2>
+        <div id="EventHostForm">
+            <h2>Job Opportunity Submission</h2>
+            <div class="divider"></div>
+ 
+            <form id="eventForm" onsubmit="return validateEvent(event)">
+                <label for="orgname">Organization Name</label>
+                <input type="text" id="orgname" name="orgname" required />
+
+                <label for="eventname">Opportunity Title</label>
+                <input type="text" id="eventname" name="eventname" required />
+
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="Art">Art</option>
+					<option value="Teaching">Teaching</option>
+					<option value="Engineering">Engineering</option>
+					<option value="Computer Science">Computer Science</option>
+					<option value="Construction">Construction</option>
+					<option value="Celebration">Celebration</option>
+					<option value="Community Gathering">Community Gathering</option>
+					<option value="Career Fair">Career Fair</option>
+                </select>
+
+                <label for="type">Opportunity Type</label>
+                <select id="type">
+                    <option value="Jobs">Jobs</option>
+                    <option value="Social">Social</option>
+                </select>
+
+                <label for="location">Location / Address</label>
+                <input type="text" id="location" name="location" required />
+
+				<label for="oppStartDate">Opportunity Start Date</label>
+				<input type="date" id="oppStartDate" name="oppStartDate" />
+
+				<label for="oppEndDate">Opportunity End Date </label>
+				<input type="date" id="oppEndDate" name="oppEndDate" />
+
+                <label for="contactinfo">Contact Information (Name/Email)</label>
+                <input type="text" id="contactinfo" name="contactinfo" required />
+
+                <label for="notes">Opportunity Details / Notes</label>
+                <textarea id="notes" name="notes" rows="3"></textarea>
+
+                <input type="submit" value="Submit Opportunity" style="background-color: #9B1313; color: white; cursor: pointer;" />
+            </form>
+        </div>
+
+        <hr/>
+
+        <div id="AdminQuerySection">
+			<h2>Client Outreach Query</h2>
 			<div class="divider"></div>
-
-			<form id="eventForm" onsubmit="return validateEvent(event)">
-				<label for="orgname">Organization Name</label>
-				<input type="text" id="orgname" name="orgname" required />
-
-				<label for="eventname">Opportunity Title</label>
-				<input type="text" id="eventname" name="eventname" required />
-
-				<label for="startdate">Start Date</label>
-				<input type="date" id="startdate" name="startdate" required />
-
-				<label for="location">Location / Address</label>
-				<input type="text" id="location" name="location" required />
-
-				<label for="contactinfo">Contact Information (Name / Email)</label>
-				<input type="text" id="contactinfo" name="contactinfo" required />
-
-				<label for="sponsorname">Sponsoring Organization / Partner</label>
-				<input type="text" id="sponsorname" name="sponsorname" required />
-
-				<label for="notes">Opportunity Details / Notes (Optional)</label>
-				<textarea id="notes" name="notes" rows="3"></textarea>
-
-				<input type="submit" value="Submit Opportunity" />
-			</form>
-
-			<p id="externalErrorMessage">Please fill in all required fields correctly.</p>
+			<div class="query-buttons">
+				<button onclick="findInterestedFamilies('Jobs')">Query Job Seekers</button>
+				<button onclick="findInterestedFamilies('Social')">Query Social Events</button>
+				<button onclick="findInterestedFamilies('Computer Science')">CS</button>
+				<button onclick="findInterestedFamilies('Engineering')">Engineering</button>
+				<button onclick="findInterestedFamilies('Art')">Art</button>
+				<button onclick="findInterestedFamilies('Teaching')">Teaching</button>
+			</div>
+			<div id="queryResults"></div>
 		</div>
-	</div>
 
+        <hr/>
 
-	<script src="../shared/job-opportunities-storage.js"></script>
-	<script src="../Host An Event/event.js"></script>
-	<script src="../shared/auth-nav.js"></script>
-</body>
-</html>
+        <div id="ViewAllSection" style="margin-top: 40px;">
+            <h2>Global Opportunity Database</h2>
+            <div class="divider"></div>
+            <p>Review and manage all active opportunities:</p>
+            
+            <div style="margin-bottom: 10px;">
+                <button onclick="displayAllOpportunities()">Refresh Table</button>
+                <button onclick="clearDatabase()" style="background-color: #666; color: white; margin-left: 10px;">Clear All Data</button>
+            </div>
 
+            <div id="allOpportunitiesList" style="margin-top: 20px; text-align: left;"></div>
+        </div>
+
+		<div id="VolunteerReviewSection" style="margin-top: 40px;">
+			<h2>Volunteer Applications</h2>
+			<div class="divider"></div>
+			<div id="volAppList"></div>
+		</div>
+    </div>
+
+    <script>
+    // 1. Initialize full User Database
+    function initializeUserDatabase() {
+        if (!localStorage.getItem('userDatabase')) {
+            const families = [
+                { name: "Smith", interest: "Computer Science", email: "smith@cs.com" },
+                { name: "Chen", interest: "Engineering", email: "chen@eng.com" },
+                { name: "Rodriguez", interest: "Art", email: "rod@arts.com" },
+                { name: "Thompson", interest: "Teaching", email: "prof@teach.com" },
+                { name: "Miller", interest: "Jobs", email: "miller@work.com" },
+                { name: "Davis", interest: "Social", email: "davis@social.com" }
+            ];
+
+            const initialDb = {};
+            families.forEach(f => {
+                const username = f.name.toLowerCase();
+                initialDb[username] = {
+                    fname: f.name,
+                    lname: "Family",
+                    email: f.email,
+                    resume: `Interested in ${f.interest} opportunities.`,
+                    interests: f.interest
+                };
+            });
+
+            initialDb["user1"] = {
+                fname: "Mikasa",
+                lname: "Ackerman",
+                email: "mikasa@surveycorp.com",
+                resume: "Expert in physical coordination and mural restoration.",
+                interests: "Art, Jobs"
+            };
+
+            localStorage.setItem('userDatabase', JSON.stringify(initialDb));
+        }
+    }
+
+    // 2. Initialize Presets
+    function initializePresets() {
+        let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+        const presets = [
+            { title: "Junior Web Developer", org: "Tech Corp", location: "Remote", category: "Computer Science", type: "Jobs", date: "2026-04-17" },
+            { title: "Civil Engineering Intern", org: "Build-It Co", location: "Downtown", category: "Engineering", type: "Jobs", date: "2026-04-17" },
+            { title: "Community Mural Project", org: "Art Council", location: "East Park", category: "Art", type: "Social", date: "2026-04-17" }
+        ];
+
+        presets.forEach(preset => {
+            const exists = globalOpportunities.some(item => item.title === preset.title);
+            if (!exists) globalOpportunities.push(preset);
+        });
+        localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+    }
+
+    // 3. View Function (The Table Button)
+    function displayAllOpportunities() {
+        const displayArea = document.getElementById('allOpportunitiesList');
+        if (!displayArea) return; // Guard clause
+
+        const allData = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+        
+        if (allData.length === 0) {
+            displayArea.innerHTML = "<p style='padding:10px;'><em>The database is currently empty.</em></p>";
+            return;
+        }
+
+        let html = `<table border="1" style="width:100%; border-collapse: collapse; font-size: 12px; margin-top:10px;">
+                        <tr style="background-color: #9B1313; color: white;">
+                            <th style="padding:8px;">Title</th>
+							<th style="padding:8px;">Org</th>
+							<th style="padding:8px;">Category</th>
+							<th style="padding:8px;">End Date</th>
+							<th style="padding:8px;">Actions</th>
+                        </tr>`;
+
+        allData.forEach((item, index) => {
+
+			const dateDisplay = item.endDate ? item.endDate : "Ongoing";	
+            html += `<tr>
+                    <td style="padding:8px;">${item.title}</td>
+                    <td style="padding:8px;">${item.org || 'N/A'}</td>
+                    <td style="padding:8px;">${item.category}</td>
+                    <td style="padding:8px; font-weight: ${item.endDate ? 'normal' : 'bold'};">
+                        ${dateDisplay}
+                    </td>
+                    <td style="padding:8px;">
+                        <button onclick="editOpportunity(${index})" style="margin-right:5px;">Edit</button>
+                        <button onclick="deleteOpportunity(${index})" style="color:red;">Delete</button>
+                    </td>
+                </tr>`;
+        });
+        displayArea.innerHTML = html + `</table>`;
+    }
+
+    // 4. Outreach Query (The Query Buttons)
+    function findInterestedFamilies(category) {
+        const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+        const resultsDiv = document.getElementById('queryResults');
+        if (!resultsDiv) return;
+
+        let found = false;
+        let html = `<h4 style="margin-top:10px;">Matches for "${category}":</h4><ul style="padding-left:20px;">`;
+
+        for (let username in userDb) {
+            const user = userDb[username];
+            // Check if user interests contains the category string
+            if (user.interests && user.interests.toLowerCase().includes(category.toLowerCase())) {
+                html += `<li style="margin-top:5px;">
+                    <a href="client-details.html?user=${username}" style="color:#9B1313; font-weight:bold;">
+                        View ${user.fname} ${user.lname} Profile
+                    </a> - (${user.interests})
+                </li>`;
+                found = true;
+            }
+        }
+        resultsDiv.innerHTML = found ? html + "</ul>" : `<p style="color:gray; padding:10px;">No matches found for "${category}".</p>`;
+    }
+
+    function deleteOpportunity(index) {
+        let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities'));
+        if (confirm(`Are you sure you want to delete this record?`)) {
+            globalOpportunities.splice(index, 1);
+            localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+            displayAllOpportunities();
+        }
+    }
+
+    function validateEvent(e) {
+        e.preventDefault();
+
+		const startVal = document.getElementById('oppStartDate').value;
+    	const endVal = document.getElementById('oppEndDate').value;
+
+        const newOpportunity = {
+            title: document.getElementById('eventname').value,
+            category: document.getElementById('category').value,
+            type: document.getElementById('type').value,
+            org: document.getElementById('orgname').value,
+            location: document.getElementById('location').value,
+            contact: document.getElementById('contactinfo').value,
+            details: document.getElementById('notes').value,
+            startDate: startVal,
+        	endDate: endVal ? endVal : null
+        };
+        
+        let globalOpportunities = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+        globalOpportunities.push(newOpportunity);
+        localStorage.setItem('globalOpportunities', JSON.stringify(globalOpportunities));
+        
+        alert("Opportunity Successfully Saved!");
+        document.getElementById('eventForm').reset();
+        displayAllOpportunities();
+        return false;
+    }
+
+    function clearDatabase() {
+        if (confirm("WARNING: This will clear every opportunity from the database. Proceed?")) {
+            localStorage.removeItem('globalOpportunities');
+            displayAllOpportunities();
+        }
+    }
+
+    window.onload = function() {
+        initializeUserDatabase();
+        initializePresets();
+        displayAllOpportunities();
+		displayVolunteerApps();
+        
+        // Header Auth Sync
+        const userLabel = sessionStorage.getItem('loggedInUser');
+        const authLinks = document.getElementById('auth-links');
+        if(userLabel && authLinks) {
+            authLinks.innerHTML = `
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+            `;
+        }
+    };
+	function editOpportunity(index) {
+			// Save the index to sessionStorage so the Edit Page knows which one to load
+			sessionStorage.setItem('editTargetIndex', index);
+			window.location.href = 'edit-opportunity.html';
+		}
+
+	function displayVolunteerApps() {
+		const list = document.getElementById('volAppList');
+		const apps = JSON.parse(localStorage.getItem('volunteerApps')) || [];
+		
+		if (apps.length === 0) {
+			list.innerHTML = "<p>No pending volunteer applications.</p>";
+			return;
+		}
+
+		let html = `<table border="1" style="width:100%; border-collapse: collapse;">
+					<tr style="background:#9B1313; color:white;">
+						<th>Username</th><th>Skills</th><th>Actions</th>
+					</tr>`;
+
+		apps.forEach((app, index) => {
+			html += `<tr>
+				<td>${app.username}</td>
+				<td>${app.skills}</td>
+				<td>
+					<button onclick="processVolunteer(${index}, 'accept')" style="color:green;">Accept</button>
+					<button onclick="processVolunteer(${index}, 'deny')" style="color:red;">Deny</button>
+				</td>
+			</tr>`;
+		});
+		list.innerHTML = html + "</table>";
+		}
+
+	function processVolunteer(index, action) {
+		let apps = JSON.parse(localStorage.getItem('volunteerApps'));
+		let userDb = JSON.parse(localStorage.getItem('userDatabase'));
+		const targetUser = apps[index].username;
+
+		if (action === 'accept') {
+			// Change role in database
+			if (userDb[targetUser]) {
+				userDb[targetUser].role = 'volunteer';
+				localStorage.setItem('userDatabase', JSON.stringify(userDb));
+				alert(`${targetUser} is now a Volunteer!`);
+			}
+		} else {
+			alert(`Application for ${targetUser} denied.`);
+		}
+
+		// Remove from pending list
+		apps.splice(index, 1);
+		localStorage.setItem('volunteerApps', JSON.stringify(apps));
+		displayVolunteerApps();
+	}
+
+</script>

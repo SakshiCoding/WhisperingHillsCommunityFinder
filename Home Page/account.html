@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>My Account - Whispering Hills</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Account Settings</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Home</a>
+            <span id="auth-links"></span>
+        </div>
+
+        <div id="contentColumn" style="width: 100% !important;">
+            <h2>Profile Information</h2>
+            <div class="divider"></div>
+            <form id="accountForm" style="text-align: left; padding: 20px;">
+                <label>First Name:</label><br>
+                <input type="text" id="fname" style="width: 300px; padding: 5px;"><br><br>
+
+                <label>Last Name:</label><br>
+                <input type="text" id="lname" style="width: 300px; padding: 5px;"><br><br>
+
+                <label>Contact Email:</label><br>
+                <input type="email" id="email" style="width: 300px; padding: 5px;"><br><br>
+
+                <label>Resume / Skillset:</label><br>
+                <textarea id="resume" style="width: 90%; height: 100px;"></textarea><br><br>
+
+                <label>Interests (comma separated):</label><br>
+                <input type="text" id="interests" placeholder="e.g. Art, Jobs, Teaching" style="width: 300px; padding: 5px;"><br><br>
+
+                <button type="button" onclick="saveAccount()" style="background: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer;">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+   <script>
+        window.onload = function() {
+            // 1. Get the current logged-in user label (e.g., "admin1 (Administrator)")
+            const userLabel = sessionStorage.getItem('loggedInUser');
+            
+            if (!userLabel) {
+                alert("Please log in to view settings.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            // 2. Extract just the username part (e.g., "admin1")
+            const username = userLabel.split(' ')[0].toLowerCase();
+            
+            // 3. Pull the database
+            let userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+            
+            // 4. Fill the form if they exist, otherwise show empty
+            const profile = userDb[username];
+            if (profile) {
+                document.getElementById('fname').value = profile.fname || "";
+                document.getElementById('lname').value = profile.lname || "";
+                document.getElementById('email').value = profile.email || "";
+                document.getElementById('resume').value = profile.resume || "";
+                document.getElementById('interests').value = profile.interests || "";
+            }
+            
+            // Sync the header name
+            document.getElementById('auth-links').innerHTML = `<span style="color:white; font-weight:bold;">${userLabel}</span>`;
+        };
+
+        function saveAccount() {
+            const userLabel = sessionStorage.getItem('loggedInUser');
+            const username = userLabel.split(' ')[0].toLowerCase();
+            const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+
+            userDb[username] = {
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                email: document.getElementById('email').value,
+                resume: document.getElementById('resume').value,
+                interests: document.getElementById('interests').value
+            };
+
+            localStorage.setItem('userDatabase', JSON.stringify(userDb));
+            alert("Success! Your profile and interests have been updated.");
+        }
+    </script>
+</body>
+</html>

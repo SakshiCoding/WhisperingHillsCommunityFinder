@@ -1,35 +1,22 @@
- <!--
-Design by Bryant Smith
-http://www.bryantsmith.com
-http://www.aszx.net
-email: template [-at-] bryantsmith [-dot-] com
-Released under Creative Commons Attribution 2.5 Generic.  In other words, do with it what you please; but please leave the link if you'd be so kind :)
-
-Name       : Simple!
-Description: Top naviagation (main), and right naviagation (secondary) with main content in left column
-Version    : 1.0
-Released   : 20081009
--->
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>Simple Factorial by Bryant Smith</title>
+<title>Whispering Hills Community Finder</title>
 </head>
 
 <body>
   <div id="main" class="whcf-home-layout">
-  	<h1>Whispering Hills Community Finder</h1>
-  	<div id="header">
-    	 <a href="index.html">Home</a>
-         <a href="#about">About us</a>
+    <h1>Whispering Hills Community Finder</h1>
+    <div id="header">
+        
+         <a href="index.html">Home</a>
+         <a href="#about">About us</a> 
 
          <span id="volunteer-tools" style="display: none;">
-         <a href="../Volunteer Page/vetting.html" style="color: #FFD700;">Vetting Queue</a>
-         </span>
+            <a href="../Volunteer%20Page/vetting.html" style="color: #FFD700; font-weight: bold;">Vetting Queue</a>
+        </span>
 
          <div id="notification-area" style="display: none; position: relative; vertical-align: top;"> 
             <a href="#" id="notification-btn">Notifications</a>
@@ -37,68 +24,80 @@ Released   : 20081009
             
             <div id="notification-window"> 
                 <h3>Recommended for You</h3>
-                <div class="divider" style="width: 100%;"></div>
-                <ul id="job-list">
-                    <li><strong>Junior Web Developer</strong><br>XYZ Tech</li>
-                    <li><strong>Event Coordinator</strong><br>ABC Organization</li>
-                    <li><strong>APPLICATION UPDATE: XYZ Tech has recieved your application</strong></li>
-                    <li><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
-                </ul>
+                <div class="divider" style="width: 100%; height: 1px; background: #9B1313; margin: 10px 0;"></div>
+                <ul id="job-list"></ul>
                 <button onclick="closeNotifications()">Close</button>
             </div>
         </div>    
        
-    <span id="auth-links">
-        <a href="../Login Page/index.html">Log In</a>
-        <a href="#">Sign Up</a>
-    </span>
-</div>
+        <span id="auth-links">
+            <a href="../Login Page/index.html">Log In</a>
+            <a href="#">Sign Up</a>
+        </span>
+    </div>
+
+    <div id="universal-search-container" style="clear: both; background-color: #FFFFFF; padding: 20px 0; text-align: center;">
+        <input type="text" id="globalSearch" placeholder="Search by job title, category, or description keywords..." 
+            onkeyup="searchGlobalDatabase()" 
+            style="width: 75%; padding: 15px; border: 2px solid #9B1313; border-radius: 30px; font-size: 16px; outline: none;">
+        
+        <div id="searchResultsSection" style="display: none; margin-top: 30px; text-align: left; padding: 0 5%; background: #fefefe;">
+            <h2 style="color: #9B1313; border-bottom: 2px solid #9B1313;">Search Results</h2>
+            <div id="resultsContent"></div>
+            <button onclick="clearSearch()" style="margin-top: 20px; padding: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 5px;">Clear Search and Show Mission</button>
+            <hr style="margin-top: 30px;" />
+        </div>
+    </div>
+
     <div id="contentColumn">
-		
-  <!-- This is an entry, copy and paste it to create a new one -->      
-    <h2>Our Mission</h2>
+        <h2>Our Mission</h2>
         <div class="divider"></div>
-        <p>Whispering Hills Community Finder strives to provide opportunities and information to people with special needs and their families. There has been a lack of recognition and connections within the special needs community, which leads people to start developing bad habits. The creator of Whispering Hills, Lisa Williams, noticed that the resources were scattered across town, hard to find, and not allowing these families to benefit fully. The goal of Whispering Hills Community Finder is to design a website that has all the connections, opportunities, and jobs in one place. The website accepts events and jobs and provides the relevant information to clients who have an account. This new community was built to foster connections, encourage support, and improve the quality of living.</p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  
-  
-    <!-- This is an entry, copy and paste it to create a new one -->      
-  <h2>Sponsors</h2>
+        <p>Whispering Hills Community Finder strives to provide opportunities and information to people with special needs and their families. There has been a lack of recognition and connections within the special needs community, which leads people to start developing bad habits. The creator of Whispering Hills, Lisa Williams, noticed that the resources were scattered across town, hard to find, and not allowing these families to benefit fully. The goal of Whispering Hills Community Finder is to design a website that has all the connections, opportunities, and jobs in one place. The website accepts events and jobs and provides the relevant information to clients who have an account. This new community was built to foster connections, encourage support, and improve the quality of living</p>
+        
+        <h2>Sponsors</h2>
         <div class="divider"></div>
         <p>Lisa Williams is the co-founder, who is a passionate mother who saw the changes that needed to happen in the town she just moved to. She knew there needed to be a system in which people with similar struggles could connect, and her drive to form this community was for her children. Her daughter had Down Syndrome, and after she moved to town, she noticed the lack of a community. She wanted to develop a Community Finder to create a hub where all connections and opportunities could be located easily.</p>
-            <h2>Apply here to receive the weekly newsletter!</h2>
-        <p>This newsletter is the one-stop shop for all current opportunities, happenings, and local connections for the week. Events will be posted so you won't miss out on the opportunities offered, so click the link below to opt in to receive emailed weekly newsletters.</p>
-        <p><label><input type="checkbox" class="newsletter-optin" /> I would like to recieve the weekly newsletter</label></p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  
-  
-   <!-- This is an entry, copy and paste it to create a new one -->      
-  <h2>Our Volunteer Application Process</h2>
+            
+        <h2>Apply here to receive the weekly newsletter!</h2>
+            <div id="newsletter-container" style="background: #f9f9f9; padding: 15px; border-left: 5px solid #9B1313;">
+                <p id="newsletter-msg">Stay updated with the latest community opportunities.</p>
+                <label id="newsletter-label">
+                    <input type="checkbox" id="newsletter-checkbox" /> <span id="checkbox-text">I would like to receive the weekly newsletter</span>
+                </label>
+                <br><br>
+                <button onclick="handleNewsletter()" style="background: #9B1313; color: white; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold;">Submit</button>
+            </div>
+        <h2>Our Volunteer Application Process</h2>
         <div class="divider"></div>
         <p>Volunteer applicants assist the program in searching for event opportunities, and help the community grow. Background checks are required and volunteers may sign up for the newsletter.</p>
-  <!-- This is an entry, copy and paste it to create a new one -->
-  </div>
+    </div>
 
-  <div id="navColumn" data-role-sidebar="user1">
-		<div class="subHeader"><h3>Opportunities</h3></div>
-            <ul>
-                <li><a href="../Volunteer Application/index.html">Apply to be a Volunteer</a></li>
-                <li><a href="../Host An Event/index.html">Create An Event</a></li>
-                <li><a href="../Job Opportunities/index.html">Job Opportunities</a></li>
-                <li><a href="../Social%20Opportunities/index.html">Social Opportunities</a></li>
-            </ul>
+    <div id="navColumn">
+        <div id="dynamic-admin-section">
+           <ul id="dynamic-nav-list" style="list-style: none; padding: 0; margin-bottom: 20px;"></ul>
+        </div>
 
-  
+        <div class="subHeader"><h3>Opportunities</h3></div>
+        <ul>
+            <li><a href="../Volunteer Application/index.html">Apply to be a Volunteer</a></li>
+            <li><a href="../Job Opportunities/index.html">Job Opportunities</a></li>
+            <li><a href="../Social%20Opportunities/index.html">Social Opportunities</a></li>
+        </ul>
+    </div>
+<script type="text/javascript">
+    (function() {
+        const userLabel = sessionStorage.getItem('loggedInUser');
+        const isLoginPage = window.location.pathname.includes('Login');
+        
+        // Only redirect if there's no user AND we aren't already on the Login Page
+        if (!userLabel && !isLoginPage) {
+            window.location.href = '../Login Page/index.html';
+        }
+    })();
+    //run the cleanup immediately so that the expired opportunities don't show up
+    cleanupExpiredOpportunities();
+    
 
-		<div class="subHeader"><h3>Event Archieve</h3></div>
-            <ul>
-                <li><a href="../Job Opportunity History/index.html">Job Opportunity History</a></li>
-                <li><a href="../Social%20Opportunity%20History/index.html">Social Opportunity History</a></li>
-            </ul>
-
-  </div>
-  
-  <script>
     window.onload = function() {
         const userLabel = sessionStorage.getItem('loggedInUser');
         const authContainer = document.getElementById('auth-links');
@@ -107,116 +106,309 @@ Released   : 20081009
         const notificationArea = document.getElementById('notification-area'); 
         const jobList = document.getElementById('job-list');
 
-        console.log('Logged in user:', userLabel); 
+        const dynamicList = document.getElementById('dynamic-nav-list');
+        const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
 
+        let roleLinks = ""; 
+        let sidebarHtml = "";
 
-        if (userLabel && authContainer) {
-            if(notificationArea){
-                notificationArea.style.display = 'inline-block'; // Show notifications if user is logged in
-            }
+        //Exit if logged out
+        if (!userLabel) return; 
 
-            // Replace the Log In/Sign Up links with the user label and a Logout button
-            authContainer.innerHTML = `
-                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
-                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
-            `;
+        const currentUsername = userLabel.split(' ')[0].toLowerCase().trim();
 
-            // Requirement 502: Only Clients see the Notification button
-         if (userLabel.toLowerCase().includes('client')) {
-         if (notificationArea) notificationArea.style.display = 'inline-block';
-         if (dot) dot.style.display = 'block';
-         } 
-    
-        // Requirement 501: Only Volunteers see the Vetting Queue link
-         else if (userLabel.toLowerCase().includes('volunteer')) {
-         const volTools = document.getElementById('volunteer-tools');
-         if (volTools) {
-            volTools.style.display = 'inline-block'; // Typical Course Step 1
-             }
-         }
+        const username = userLabel.split(' ')[0].toLowerCase().trim();
+        const userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
         
-            if(userLabel.toLowerCase().includes('client')){
-                if(notificationArea){
-                    notificationArea.style.display = 'inline-block'; 
-                }
+        // Reset on first app load
+        if (!sessionStorage.getItem('appInitialized')) {
+            localStorage.setItem('newsletterSubs', JSON.stringify([]));
+            localStorage.setItem('allNotifications', JSON.stringify([]));
+            localStorage.setItem('allApplications', JSON.stringify([])); 
+            localStorage.setItem('volunteerApps', JSON.stringify([]));
 
-                if(dot){
-                    dot.style.display = 'block'; 
-                }    
-                dot.style.display = 'block'; // Show the notification dot for clients
+            sessionStorage.setItem('appInitialized', 'true');
+        }
+
+
+
+        // SAFETY CHECK: Only try to sync if the user actually exists in the dynamic database
+        if (userDb[username] && userDb[username].role) {
+            const currentRoleInLabel = userLabel.toLowerCase();
+            const actualRoleInDb = userDb[username].role.toLowerCase();
+
+            if (!currentRoleInLabel.includes(actualRoleInDb)) {
+                const newRole = userDb[username].role;
+                const newLabel = `${username} (${newRole.charAt(0).toUpperCase() + newRole.slice(1)})`;
+                sessionStorage.setItem('loggedInUser', newLabel);
+                window.location.reload(); 
+                return; // Stop execution here since we are reloading
             }
-            else{
-                if(notificationArea){
-                    notificationArea.style.display = 'none'; 
+        }
+
+        // Initialize Database with presets if empty
+        // REPLACE your current if (!localStorage.getItem('globalOpportunities')) block with this:
+        if (!localStorage.getItem('globalOpportunities')) {
+            const presets = [
+                { 
+                    title: "Junior Web Developer", 
+                    org: "Tech Corp", 
+                    category: "Computer Science", 
+                    recruiterID: "recruiter1",
+                    details: "Entry level web dev role.",
+                    startDate: "2026-01-01",
+                    endDate: null           
+                },
+                { 
+                    title: "Community Mural Project", 
+                    org: "Art Council", 
+                    category: "Art", 
+                    recruiterID: "recruiter1",
+                    details: "Help paint the local park mural.", 
+                    startDate: "2026-01-01",
+                    endDate: null
+                },
+                { 
+                    title: "Civil Engineering Intern", 
+                    org: "Build-It Co", 
+                    category: "Engineering", 
+                    recruiterID: "recruiter1",
+                    details: "Shadow senior engineers on site.", 
+                    startDate: "2026-01-01",
+                    endDate: null 
                 }
+            ];
+            localStorage.setItem('globalOpportunities', JSON.stringify(presets));
+            console.log("Database initialized with recruiter1 links.");
+        }
+
+        if(userLabel.toLowerCase().includes('recruiter')){
+            roleLinks = `<a href="../Applications/list.html" style="margin-right:10px;">Applications</a>`;
+            sidebarHtml += "<li><a href='../Host An Event/index.html' style='font-size:13px; color:#9B1313; font-weight:bold;'>+ Create An Event</a></li>";
+            
+        }
+
+        if(userLabel.toLowerCase().includes('administrator')){
+            roleLinks = `<a href="../Administrator%20Opportunity%20Management/index.html" style="margin-right:10px;">Opportunity Management</a>`;
+            
+            // Add newsletter management to sidebar for admins
+            sidebarHtml = "<li style='list-style:none; font-weight:bold; color:#333; margin-bottom:5px;'>Admin Tools:</li>";
+            sidebarHtml += "<li><a href='../Newsletter%20Subscribers/index.html' style='font-size:13px;'>Send Newsletter</a></li>";
+            sidebarHtml += "<li><a href='../Administrator%20Opportunity%20Management/index.html#VolunteerReviewSection' style='font-size:13px;'>Review Volunteer Apps</a></li>";
+            sidebarHtml += "<li><a href='../Host An Event/index.html' style='font-size:13px; color:#9B1313; font-weight:bold;'>+ Create An Event</a></li>";
+        }
+
+        if (authContainer) {
+            authContainer.style.display = 'inline-flex';
+            authContainer.style.alignItems = 'center';
+            authContainer.style.justifyContent = 'flex-end';
+            authContainer.style.minWidth = '300px';
+            authContainer.style.gap = '15px';
+            
+            authContainer.innerHTML = ` 
+                ${roleLinks}
+                <div class="user-menu" style="position: relative;">
+                    <span class="username-trigger" style="color: white; font-weight: bold; cursor: pointer; white-space: nowrap;">
+                        ${userLabel} ▼
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="account.html">Edit Account Details</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            `;
+        }
+    
+        if (userLabel.toLowerCase().includes('volunteer')) {
+            const volTools = document.getElementById('volunteer-tools');
+            if (volTools) volTools.style.display = 'inline-block';
+        }
+
+        // --- NOTIFICATIONS LOGIC + MYAPPLICATIONS---
+        if (userLabel.toLowerCase().includes('client')) {
+            if (notificationArea) notificationArea.style.display = 'inline-block';
+            
+            
+            const allAdminAlerts = JSON.parse(localStorage.getItem('allNotifications')) || [];
+            const myAlerts = allAdminAlerts.filter(n => n.recipient && n.recipient.toLowerCase() === currentUsername);
+
+            let notificationStream = [];
+
+            myAlerts.forEach(n => {
+                notificationStream.push({ title: n.type || "ADMIN ALERT", message: n.message, date: n.date || "Recent" });
+            });
+
+            if (jobList) {
+                jobList.innerHTML = ''; 
+                notificationStream.forEach(notif => {
+                    jobList.innerHTML += `
+                        <li style="margin-top: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; list-style: none;">
+                            <strong style="color: #9B1313; font-size: 13px;">${notif.title}</strong><br/>
+                            <span style="color: #333; font-size: 12px;">${notif.message}</span><br/>
+                            <small style="color: #999; font-size: 10px;">${notif.date}</small>
+                        </li>`;
+                });
+                if (dot && notificationStream.length > 0) dot.style.display = 'block';
             }
         }
 
         const btn = document.getElementById('notification-btn');
-
         if(btn && notifyWindow){
             btn.onclick = function(e){
                 e.preventDefault(); 
-                const isCurrentlyVisible = notifyWindow.style.display === 'block';
-                notifyWindow.style.display = isCurrentlyVisible ? 'none' : 'block'; 
-
+                notifyWindow.style.display = (notifyWindow.style.display === 'block') ? 'none' : 'block'; 
                 if(dot) dot.style.display = 'none'; 
             };
         }
 
-        if(userLabel && authContainer){
-            let recruiterLink = ""; 
+        if (dynamicList) dynamicList.innerHTML = sidebarHtml;
 
-            if(userLabel.toLowerCase().includes('recruiter')){
-                recruiterLink = `<a href="../Applications/list.html">Applications</a>`;
-            }
-
-            authContainer.innerHTML = ` 
-                ${recruiterLink}
-                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
-                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
-            `;
-        }
-
-        if (approvedData.length > 0) {
-            jobList.innerHTML = ''; // Clear hardcoded mock data
-            approvedData.forEach(item => {
-                // System displays only approved records
-                jobList.innerHTML += `<li><strong>${item.name}</strong><br>${item.details}</li>`;
+        // Add click handler to toggle dropdown
+        const usernameTrigger = document.querySelector('.username-trigger');
+        const dropdownContent = document.querySelector('.dropdown-content');
+        if (usernameTrigger && dropdownContent) {
+            usernameTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
             });
-            document.getElementById('notification-dot').style.display = 'block';
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu')) {
+                    dropdownContent.style.display = 'none';
+                }
+            });
+        }
+    };
+
+    function searchGlobalDatabase() {
+        const query = document.getElementById('globalSearch').value.toLowerCase();
+        const resultsSection = document.getElementById('searchResultsSection');
+        const resultsContent = document.getElementById('resultsContent');
+        const missionContent = document.getElementById('contentColumn');
+
+        const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+
+        if (query.trim() === "") {
+            clearSearch();
+            return;
         }
 
-    }; 
+        const filtered = allOpps.filter(item => {
+            const title = (item.title || "").toLowerCase();
+            const category = (item.category || "").toLowerCase();
+            const org = (item.org || "").toLowerCase();
+            const details = (item.details || item.notes || "").toLowerCase();
+            return title.includes(query) || category.includes(query) || org.includes(query) || details.includes(query);
+        });
+
+        resultsSection.style.display = "block";
+        missionContent.style.display = "none";
+
+        if (filtered.length > 0) {
+            let html = '<div style="display: grid; gap: 20px;">';
+            filtered.forEach(item => {
+                const applyUrl = `apply.html?job=${encodeURIComponent(item.title)}`;
+                const dateInfo = item.endDate 
+                    ? `<p style="font-size: 11px; color: #666;"><strong>Dates:</strong> ${item.startDate} to ${item.endDate}</p>`
+                    : `<p style="font-size: 11px; color: #666;"><strong>Dates:</strong> Ongoing / Open</p>`;
+                html += `
+                    <div class="search-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: white;">
+                        <h3 style="margin-top: 0; color: #9B1313;">${item.title}</h3>
+                        <p><strong>Org:</strong> ${item.org} | <strong>Category:</strong> ${item.category}</p>
+                        <p style="color: #555; font-style: italic;">"${item.details || 'No description provided.'}"</p>
+                        <div style="margin-top: 15px;">
+                            <button onclick="alert('Contact ${item.org} for info!')" style="background: #eee; border: 1px solid #ccc; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-right: 10px;">Learn More</button>
+                            <a href="${applyUrl}" style="background: #9B1313; color: white; padding: 9px 20px; border-radius: 4px; text-decoration: none; display: inline-block; font-weight: bold; font-size: 13px;">Apply Now</a>
+                        </div>
+                    </div>`;
+            });
+            html += '</div>';
+            resultsContent.innerHTML = html;
+        } else {
+            resultsContent.innerHTML = `<p style="padding: 20px; border-left: 5px solid #9B1313;">No matches found for "${query}".</p>`;
+        }
+    }
+
+    function clearSearch() {
+        document.getElementById('globalSearch').value = "";
+        document.getElementById('searchResultsSection').style.display = "none";
+        document.getElementById('contentColumn').style.display = "block";
+    }
+
     function closeNotifications() {
         document.getElementById('notification-window').style.display = 'none';
     }
-zz
 
     function logout() {
         sessionStorage.removeItem('loggedInUser');
-        window.location.reload(); // Refresh to show Log In/Sign Up again
+        window.location.reload();
     }
-</script>
-        
-        
-  
-</div>
-<!-- Please leave the link(s) in the footer, but please do modify it in any other way you please -->
-<script type="text/javascript">
-  (function () {
-    var checkboxes = document.querySelectorAll(".newsletter-optin");
-    for (var i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].addEventListener("change", function () {
-        if (this.checked) {
-          alert("You've been opted into the weekly newsletter!");
-          this.checked = false;
+
+    function updateNewsletterUI() {
+    const userLabel = sessionStorage.getItem('loggedInUser');
+    if (!userLabel) return;
+    const username = userLabel.split(' ')[0].toLowerCase();
+    const subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+    
+    const checkbox = document.getElementById('newsletter-checkbox');
+    const text = document.getElementById('checkbox-text');
+    
+    if (subs.includes(username)) {
+        text.innerText = "I would like to opt out of the newsletter";
+        checkbox.checked = true;
+    } else {
+        text.innerText = "I would like to receive the weekly newsletter";
+        checkbox.checked = false;
+    }
+}
+
+    function handleNewsletter() {
+        const userLabel = sessionStorage.getItem('loggedInUser');
+        const username = userLabel.split(' ')[0].toLowerCase();
+        let subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+        const isChecked = document.getElementById('newsletter-checkbox').checked;
+
+        if (isChecked) {
+            if (!subs.includes(username)) subs.push(username);
+            alert("You have been subscribed!");
+        } else {
+            subs = subs.filter(u => u !== username);
+            alert("You have been opted out.");
         }
-      });
+            
+        localStorage.setItem('newsletterSubs', JSON.stringify(subs));
+        updateNewsletterUI();
+
+}
+
+function cleanupExpiredOpportunities() {
+        const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to compare only dates
+
+        // Filter the list
+        const validOpps = allOpps.filter(opp => {
+            // 1. If it has no end date (your presets), keep it.
+            if (!opp.endDate) return true;
+
+            // 2. Convert string "YYYY-MM-DD" to a Date object
+            const expiryDate = new Date(opp.endDate);
+            
+            // 3. Keep if the expiry date is today or in the future
+            return expiryDate >= today;
+        });
+
+        // If items were removed, update the database
+        if (validOpps.length !== allOpps.length) {
+            localStorage.setItem('globalOpportunities', JSON.stringify(validOpps));
+            console.log(`${allOpps.length - validOpps.length} expired opportunities removed.`);
+        }
     }
-  })();
+
 </script>
-<script src="../shared/auth-nav.js"></script>
-<script src="../shared/home-sidebar-role.js"></script>
+
+<div style="clear: both;"></div>
+<div id="footer"><a href="http://www.bryantsmith.com/template">free css template</a> by <a href="http://www.bryantsmith.com">florida web design</a></div>
 </body>
 </html>

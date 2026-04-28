@@ -151,3 +151,32 @@ a:hover {
 	margin-bottom: 10px;
 	background-color: #DD6A6A;
 }
+
+#EventHostForm form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#EventHostForm label {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#EventHostForm input, #EventHostForm textarea {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#EventHostForm input[type="submit"] {
+    background-color: #9B1313;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
+}

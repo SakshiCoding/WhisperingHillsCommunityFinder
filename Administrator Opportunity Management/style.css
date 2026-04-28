@@ -1,3 +1,91 @@
 /* Administrator Opportunity Management - reuse External Opportunity styles */
 @import url("../External Opportunity/style.css");
 
+#allOpportunitiesList table {
+    margin-top: 10px;
+}
+
+#allOpportunitiesList tr:nth-child(even) {
+    background-color: #f2f2f2; /* Makes rows easier to read */
+}
+
+#allOpportunitiesList button:hover {
+    color: #9B1313;
+    transform: scale(1.2);
+    transition: 0.2s;
+}
+
+.divider {
+    background-color: #9B1313 !important;
+    background-image: none !important; /* Remove the old JPG if it's there */
+    width: 100%;
+    height: 2px;
+    margin: 10px 0 20px 0;
+    clear: both;
+}
+
+/* Administrator Opportunity Management - reuse External Opportunity styles */
+@import url("../External Opportunity/style.css");
+
+/* 1. Table Layout & Readability */
+#allOpportunitiesList table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white; /* Ensures it pops against the main background */
+}
+
+#allOpportunitiesList th {
+    background-color: #9B1313;
+    color: white;
+    padding: 12px 8px;
+    text-align: left;
+}
+
+#allOpportunitiesList td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+#allOpportunitiesList tr:nth-child(even) {
+    background-color: #f9f9f9; /* Subtle zebra striping */
+}
+
+/* 2. Button Interactions */
+#allOpportunitiesList button {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: #fff;
+}
+
+#allOpportunitiesList button:hover {
+    color: #9B1313;
+    border-color: #9B1313;
+    transform: scale(1.1); /* Slightly less aggressive than 1.2 */
+    transition: 0.2s;
+}
+
+/* 3. Global Dividers */
+.divider {
+    background-color: #9B1313 !important;
+    background-image: none !important; 
+    width: 100%;
+    height: 2px;
+    margin: 10px 0 20px 0;
+    clear: both;
+}
+
+/* 4. Query Results Styling */
+#queryResults ul {
+    list-style: none;
+    padding: 0;
+}
+
+#queryResults li {
+    padding: 10px;
+    border-left: 4px solid #9B1313;
+    background: #fdfdfd;
+    margin-bottom: 5px;
+}

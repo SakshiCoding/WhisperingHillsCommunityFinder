@@ -12,11 +12,11 @@
         </div>
         
         <div id="contentColumn" style="width: 100%; padding: 20px; text-align: left;">
-            <h3>Applicant: Jane Doe</h3>
+            <h3 id="displayApplicantName">Applicant: Loading...</h3>
             <div class="divider" style="width: 100%;"></div>
             
-            <p><strong>Skills:</strong> HTML, CSS, JavaScript, Python</p>
-            <p><strong>Resume Summary:</strong> 13 years of experience in software engineering. Graduated at Purdue University. Previously employed at XYZ Company</p>
+            <p><strong>Skills:</strong> <span id="displaySkills"></span></p>
+            <p><strong>Resume Summary:</strong> <span id="displayExperience"></span></p>
             
             <br>
             <form onsubmit="return saveStatus(event)">
@@ -34,15 +34,59 @@
     </div>
 
     <script>
-        function saveStatus(e) {
-            e.preventDefault();
-            const status = document.getElementById('status').value;
-            alert('Status successfully updated to: ' + status);
+    // 1. Get the Application ID from the URL
+    const params = new URLSearchParams(window.location.search);
+    const appId = params.get('id');
+
+    window.onload = function() {
+        // 2. Load all applications from Storage
+        const allApps = JSON.parse(localStorage.getItem('allApplications')) || [];
+        
+        // 3. Find the specific application that matches the ID from the URL
+        const currentApp = allApps.find(a => a.id == appId);
+
+        if (currentApp) {
+            // 4. INJECT the real data into the page
+            document.getElementById('displayApplicantName').innerText = "Applicant: " + currentApp.applicantName;
+            document.getElementById('displaySkills').innerText = currentApp.skills;
+            document.getElementById('displayExperience').innerText = currentApp.experience;
             
-            // Redirect back to the list page
-            window.location.href = 'list.html';
-            return false;
+            // Set the dropdown to match the current status
+            if(currentApp.status) {
+                document.getElementById('status').value = currentApp.status.toLowerCase().replace(/\s+/g, '');
+            }
+        } else {
+            alert("Application not found!");
         }
-    </script>
+    };
+
+    function saveStatus(e) {
+        e.preventDefault();
+        const statusSelect = document.getElementById('status');
+        const newStatusText = statusSelect.options[statusSelect.selectedIndex].text;
+
+        // Update the status in the main database
+        let allApps = JSON.parse(localStorage.getItem('allApplications')) || [];
+        let index = allApps.findIndex(a => a.id == appId);
+        
+        if (index !== -1) {
+            allApps[index].status = newStatusText;
+            localStorage.setItem('allApplications', JSON.stringify(allApps));
+
+            // Send notification back to user
+            let allNotifs = JSON.parse(localStorage.getItem('allNotifications')) || [];
+            allNotifs.push({
+                recipient: allApps[index].applicantUsername,
+                type: "APPLICATION UPDATE",
+                message: `Your application for ${allApps[index].position} was updated to: ${newStatusText}`,
+                date: new Date().toLocaleDateString()
+            });
+            localStorage.setItem('allNotifications', JSON.stringify(allNotifs));
+
+            alert('Decision saved and notification sent!');
+            window.location.href = 'list.html';
+        }
+    }
+</script>
 </body>
 </html>

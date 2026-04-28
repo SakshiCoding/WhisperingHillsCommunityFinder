@@ -1,40 +1,122 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="../style.css" />
-	<title>Newsletter Subscribers - Whispering Hills Community Finder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Newsletter Manager - Whispering Hills</title>
 </head>
 <body>
-	<div id="main">
-		<h1>Whispering Hills Community Finder</h1>
-		<div id="header">
-			<a href="../Home Page/index.html">Home</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
-		</div>
+    <div id="main">
+        <h1>Whispering Hills Community Finder</h1>
+        <div id="header">
+            <a href="../Home Page/index.html">Home</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
 
-		<div id="contentColumn">
-			<h2>Current Newsletter Subscribers</h2>
-			<div class="divider"></div>
-			<ul>
-				<li>Alice Summer - asummer@purdue.edu</li>
-				<li>Bob Winter - bwinter@purdue.edu</li>
-				<li>Hope Spring - hspring@purdue.edu</li>
-			</ul>
-		</div>
-	</div>
+        <div id="contentColumn" style="width: 100%; text-align: left; padding: 20px;">
+            <h2>Newsletter Management</h2>
+            <div class="divider"></div>
+            
+            <div style="display: flex; gap: 40px;">
+                <div style="flex: 1;">
+                    <h3>Active Subscribers</h3>
+                    <ul id="sub-list" style="background: #fff; border: 1px solid #ddd; padding: 15px; min-height: 200px; list-style: none;">
+                        </ul>
+                </div>
 
+                <div style="flex: 1; background: #f4f4f4; padding: 20px; border-radius: 8px;">
+                    <h3>Send Weekly Newsletter</h3>
+                    <input type="text" id="news-title" placeholder="Newsletter Title (e.g. Weekly Update #4)" style="width: 95%; padding: 10px; margin-bottom: 10px;" />
+                    <textarea id="news-content" placeholder="Enter main content here..." style="width: 95%; height: 120px; padding: 10px; margin-bottom: 10px;"></textarea>
+                    <input type="text" id="news-foot" placeholder="Footnote / Contact Info" style="width: 95%; padding: 10px; margin-bottom: 20px;" />
+                    
+                    <button onclick="sendNewsletter()" style="background: #9B1313; color: white; padding: 12px 25px; border: none; cursor: pointer; font-weight: bold; width: 100%;">
+                        Send Newsletter to All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<script type="text/javascript">
-		(function () {
-			var user = localStorage.getItem('whcfUser');
-			if (user !== 'admin1') {
-				alert('Only admin1 can access newsletter subscribers.');
-				window.location.href = '../Home Page/index.html';
-			}
-		})();
-	</script>
-	<script src="../shared/auth-nav.js"></script>
+    <script type="text/javascript">
+        // 1. Security Check (Admin Only)
+        window.onload = function() {
+            const userLabel = sessionStorage.getItem('loggedInUser');
+            if (!userLabel || !userLabel.toLowerCase().includes('administrator')) {
+                alert('Only administrators can access this manager.');
+                window.location.href = '../Home Page/index.html';
+                return;
+            }
+            renderSubscribers();
+        };
+
+        // 2. Load Subscribers from localStorage
+        function renderSubscribers() {
+            const subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+            const list = document.getElementById('sub-list');
+            list.innerHTML = "";
+
+            if (subs.length === 0) {
+                list.innerHTML = "<li>No active subscribers found.</li>";
+                return;
+            }
+
+            subs.forEach(username => {
+                // We show the username and a badge indicating they chose to opt-in
+                const li = document.createElement('li');
+                li.style.padding = "8px 0";
+                li.style.borderBottom = "1px solid #eee";
+                li.innerHTML = `
+                    <strong>${username}</strong> 
+                    <span style="color: #28a745; font-size: 11px; font-weight: bold; margin-left: 10px; background: #e6ffed; padding: 2px 5px; border-radius: 3px;">
+                        ✓ OPTED IN
+                    </span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // 3. Send Logic (Sends to allNotifications)
+        function sendNewsletter() {
+            const title = document.getElementById('news-title').value;
+            const body = document.getElementById('news-content').value;
+            const foot = document.getElementById('news-foot').value;
+            const subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+
+            if (!title || !body) {
+                alert("Please fill out the title and content before sending.");
+                return;
+            }
+
+            if (subs.length === 0) {
+                alert("There are no subscribers to send this to.");
+                return;
+            }
+
+            let allNotifs = JSON.parse(localStorage.getItem('allNotifications')) || [];
+            
+            subs.forEach(username => {
+                allNotifs.push({
+                    recipient: username,
+                    type: "WEEKLY NEWSLETTER",
+                    message: `${title}\n\n${body}\n\n---\n${foot}`,
+                    date: new Date().toLocaleDateString()
+                });
+            });
+
+            localStorage.setItem('allNotifications', JSON.stringify(allNotifs));
+            alert(`Newsletter sent successfully to ${subs.length} subscribers!`);
+            
+            // Clear inputs
+            document.getElementById('news-title').value = "";
+            document.getElementById('news-content').value = "";
+            document.getElementById('news-foot').value = "";
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser');
+            window.location.href = "../Login Page/index.html";
+        }
+    </script>
 </body>
 </html>

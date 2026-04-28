@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Edit Opportunity</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Edit Opportunity</h1>
+        <div class="divider"></div>
+        
+        <form id="editForm" onsubmit="updateOpportunity(event)" style="text-align: left; padding: 20px;">
+            <label>Organization Name</label><br>
+            <input type="text" id="editOrg" style="width: 100%; margin-bottom: 15px;"><br>
+
+            <label>Opportunity Title</label><br>
+            <input type="text" id="editTitle" style="width: 100%; margin-bottom: 15px;"><br>
+
+            <label>Category</label><br>
+            <select id="editCategory" style="width: 100%; margin-bottom: 15px;">
+                <option value="Art">Art</option>
+				<option value="Teaching">Teaching</option>
+				<option value="Engineering">Engineering</option>
+				<option value="Computer Science">Computer Science</option>
+				<option value="Construction">Construction</option>
+				<option value="Celebration">Celebration</option>
+				<option value="Community Gathering">Community Gathering</option>
+				<option value="Career Fair">Career Fair</option>
+
+            </select><br>
+
+            <label>Opportunity Type</label><br>
+            <select id="editType" style="width: 100%; margin-bottom: 15px;">
+                <option value="Jobs">Jobs</option>
+                <option value="Social">Social</option>
+            </select><br>
+
+            <label>Location / Address</label><br>
+            <input type="text" id="editLocation" style="width: 100%; margin-bottom: 15px;"><br>
+
+            <label>Contact Information</label><br>
+            <input type="text" id="editContact" style="width: 100%; margin-bottom: 15px;"><br>
+
+            <label>Opportunity Details / Notes</label><br>
+            <textarea id="editDetails" style="width: 100%; height: 100px; margin-bottom: 15px;"></textarea><br>
+
+            <button type="submit" style="background: #9B1313; color: white; padding: 10px 20px; border: none; cursor: pointer;">Update Opportunity</button>
+            <button type="button" onclick="window.history.back()" style="margin-left:10px;">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        const targetIndex = sessionStorage.getItem('editTargetIndex');
+        const allOpps = JSON.parse(localStorage.getItem('globalOpportunities')) || [];
+        const currentItem = allOpps[targetIndex];
+
+        window.onload = function() {
+            if (!currentItem) {
+                alert("Error: Opportunity not found.");
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Pre-fill the form with existing data
+            document.getElementById('editOrg').value = currentItem.org || "";
+            document.getElementById('editTitle').value = currentItem.title || "";
+            document.getElementById('editCategory').value = currentItem.category || "Computer Science";
+            document.getElementById('editType').value = currentItem.type || "Jobs";
+            document.getElementById('editLocation').value = currentItem.location || "";
+            document.getElementById('editContact').value = currentItem.contact || "";
+            document.getElementById('editDetails').value = currentItem.details || "";
+        };
+
+        function updateOpportunity(e) {
+            e.preventDefault();
+
+            // Update the object in the array
+            allOpps[targetIndex] = {
+                ...currentItem, // Keep existing fields like recruiterID
+                org: document.getElementById('editOrg').value,
+                title: document.getElementById('editTitle').value,
+                category: document.getElementById('editCategory').value,
+                type: document.getElementById('editType').value,
+                location: document.getElementById('editLocation').value,
+                contact: document.getElementById('editContact').value,
+                details: document.getElementById('editDetails').value
+            };
+
+            // Save back to LocalStorage
+            localStorage.setItem('globalOpportunities', JSON.stringify(allOpps));
+            
+            alert("Opportunity updated successfully!");
+            window.location.href = 'index.html'; // Go back to the table
+        }
+    </script>
+</body>
+</html>

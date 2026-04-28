@@ -1,108 +1,74 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="../style.css" />
-	<title>Volunteer Application - Whispering Hills Community Finder</title>
-	<style type="text/css">
-		#main {
-			margin: 0 auto;
-			text-align: center;
-		}
-
-		#EventHostForm {
-			max-width: 760px;
-			margin: 0 auto;
-		}
-
-		#volunteerForm {
-			max-width: 640px;
-			margin: 0 auto;
-			text-align: left;
-		}
-
-		#volunteerForm label {
-			display: block;
-			margin-top: 14px;
-			margin-bottom: 6px;
-		}
-
-		#volunteerForm input[type="text"],
-		#volunteerForm input[type="email"],
-		#volunteerForm input[type="tel"],
-		#volunteerForm textarea {
-			display: block;
-			width: 100%;
-			box-sizing: border-box;
-		}
-
-		#volunteerForm input[type="submit"] {
-			display: block;
-			margin: 20px auto 0;
-		}
-	</style>
+    <link rel="stylesheet" type="text/css" href="../Home Page/style.css" />
+    <title>Volunteer Application</title>
 </head>
 <body>
-	<div id="main">
-		<h1>Whispering Hills Community Finder</h1>
-		<div id="header">
-			<a href="../Home Page/index.html">Home</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
-		</div>
+    <div id="main">
+        <h1>Volunteer Application</h1>
+        <div id="header"><a href="../Home Page/index.html">Back Home</a></div>
+        
+        <form id="volAppForm" onsubmit="submitVolApp(event)">
+            <label>Username (Auto-filled):</label>
+            <input type="text" id="volUser" readonly style="background:#eee;">
+            
+            <label>Skillset / Experience:</label>
+            <textarea id="volSkills" required placeholder="Tell us about your skills..."></textarea>
+            
+            <label>Birthday:</label>
+            <input type="date" id="volBirth" required>
+            
+            <button type="submit" style="background:#9B1313; color:white; padding:10px; cursor:pointer;">Submit Application</button>
+        </form>
+    </div>
 
-		<div id="EventHostForm">
-			<h2>Volunteer Application Form</h2>
-			<div class="divider"></div>
+    <script>
+        // Auto-fill the username from session
+        window.onload = function() {
+            const userLabel = sessionStorage.getItem('loggedInUser');
+            if (userLabel) {
+                document.getElementById('volUser').value = userLabel.split(' ')[0];
+            }
+        };
 
-			<form id="volunteerForm">
-				<label for="fullName">Full Name</label>
-				<input type="text" id="fullName" name="fullName" required />
+        function submitVolApp(e) {
+            e.preventDefault();
+            const app = {
+                username: document.getElementById('volUser').value,
+                skills: document.getElementById('volSkills').value,
+                birthday: document.getElementById('volBirth').value,
+                status: "Pending"
+            };
 
-				<label for="email">Email Address</label>
-				<input type="email" id="email" name="email" required />
+            let volApps = JSON.parse(localStorage.getItem('volunteerApps')) || [];
+            volApps.push(app);
+            localStorage.setItem('volunteerApps', JSON.stringify(volApps));
 
-				<label for="phone">Phone Number</label>
-				<input type="tel" id="phone" name="phone" required />
+            alert("Application submitted! An administrator will review it.");
+            window.location.href = "../Home Page/index.html";
+        }
 
-				<label for="availability">Availability (Days/Times)</label>
-				<input type="text" id="availability" name="availability" required />
+		function submitVolApp(e) {
+			e.preventDefault();
+			
+			// Create the application object
+			const app = {
+				username: document.getElementById('volUser').value, // From session
+				skills: document.getElementById('volSkills').value,
+				birthday: document.getElementById('volBirth').value,
+				status: "Pending",
+				dateSubmitted: new Date().toLocaleDateString()
+			};
 
-				<label for="experience">Previous Volunteer Experience</label>
-				<textarea id="experience" name="experience" rows="3" required></textarea>
+			// PUSH to the shared database
+			let volApps = JSON.parse(localStorage.getItem('volunteerApps')) || [];
+			volApps.push(app);
+			localStorage.setItem('volunteerApps', JSON.stringify(volApps));
 
-				<label for="skills">Relevant Skills</label>
-				<textarea id="skills" name="skills" rows="3" required></textarea>
-
-				<label for="goodVolunteer">Why do you think you will be a good Volunteer for the Whispering Hill Community?</label>
-				<textarea id="goodVolunteer" name="goodVolunteer" rows="4" required></textarea>
-
-				<label for="teamQuestions">Do you have any questions for the Whispering Hills Team?</label>
-				<textarea id="teamQuestions" name="teamQuestions" rows="4"></textarea>
-
-				<input type="submit" value="Submit Volunteer Application" />
-			</form>
-		</div>
-	</div>
-
-
-	<script type="text/javascript">
-		(function () {
-			var user = localStorage.getItem('whcfUser');
-			if (user !== 'user1') {
-				alert('Only user1 can access the volunteer application form.');
-				window.location.href = '../Home Page/index.html';
-				return;
-			}
-
-			var form = document.getElementById('volunteerForm');
-			form.addEventListener('submit', function (event) {
-				event.preventDefault();
-				alert('Thank you! Your volunteer application has been submitted.');
-				form.reset();
-			});
-		})();
-	</script>
-	<script src="../shared/auth-nav.js"></script>
+			alert("Application sent to Administrator!");
+			window.location.href = "../Home Page/index.html";
+		}
+    </script>
 </body>
 </html>

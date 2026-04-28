@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Newsletter Manager</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Newsletter Manager</h1>
+        <div id="header"><a href="index.html">Back to Home</a></div>
+
+        <div id="contentColumn" style="width: 100%; text-align: left; padding: 20px;">
+            <h3>Subscribers List</h3>
+            <ul id="sub-list" style="background: #fff; border: 1px solid #ddd; padding: 15px;"></ul>
+
+            <hr />
+            <h3>Compose Newsletter</h3>
+            <input type="text" id="news-title" placeholder="Newsletter Title" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
+            <textarea id="news-content" placeholder="Content Body" style="width: 100%; height: 150px; padding: 10px; margin-bottom: 10px;"></textarea><br>
+            <input type="text" id="news-foot" placeholder="Footnote" style="width: 100%; padding: 10px; margin-bottom: 20px;"><br>
+            
+            <button onclick="sendNewsletter()" style="background: #9B1313; color: white; padding: 15px 30px; border: none; cursor: pointer; font-weight: bold;">Send Newsletter to All</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+            const list = document.getElementById('sub-list');
+            
+            if (subs.length === 0) {
+                list.innerHTML = "<li>No active subscribers.</li>";
+            } else {
+                subs.forEach(user => {
+                    list.innerHTML += `<li><strong>${user}</strong> <span style="color: green; font-size: 11px; margin-left: 10px;">[OPTED IN]</span></li>`;
+                });
+            }
+        };
+
+        function sendNewsletter() {
+            const title = document.getElementById('news-title').value;
+            const body = document.getElementById('news-content').value;
+            const foot = document.getElementById('news-foot').value;
+            const subs = JSON.parse(localStorage.getItem('newsletterSubs')) || [];
+
+            if (!title || !body) return alert("Please enter a title and content.");
+
+            let allNotifs = JSON.parse(localStorage.getItem('allNotifications')) || [];
+            
+            subs.forEach(username => {
+                allNotifs.push({
+                    recipient: username,
+                    type: "WEEKLY NEWSLETTER",
+                    message: `${title}: ${body} \n\n ${foot}`,
+                    date: new Date().toLocaleDateString()
+                });
+            });
+
+            localStorage.setItem('allNotifications', JSON.stringify(allNotifs));
+            alert("Newsletter sent to " + subs.length + " subscribers!");
+        }
+    </script>
+</body>
+</html>

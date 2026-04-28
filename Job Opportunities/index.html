@@ -10,17 +10,21 @@
 		<h1>Whispering Hills Community Finder</h1>
 		<div id="header">
 			<a href="../Home Page/index.html">Home</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
 		</div>
 		<div id="EventHostForm">
-			<h2>Job Opportunities</h2>
-			<div class="divider"></div>
-			<p id="emptyJobsMessage">No Current Job Opportunities!!</p>
-			<ul id="jobList"></ul>
-		</div>
+            <h2>Job Opportunities</h2>
+            <div class="divider"></div>
+
+            <div id="my-applications-section" style="display: none; margin-bottom: 20px; padding: 15px; background: #fff5f5; border: 1px solid #9B1313; border-radius: 8px;">
+                <h3 style="color: #9B1313; margin-top: 0; font-size: 16px;">My Active Applications</h3>
+                <div id="applications-content" style="display: grid; gap: 8px;">
+                    </div>
+            </div>
+
+            <p id="emptyJobsMessage">No Current Job Opportunities!!</p>
+            <ul id="jobList"></ul>
+        </div>
 	</div>
-	<script src="../shared/job-opportunities-storage.js"></script>
 	<script src="jobs.js"></script>
 	<script src="../shared/auth-nav.js"></script>
 </body>

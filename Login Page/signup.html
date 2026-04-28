@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Sign Up - Whispering Hills</title>
+</head>
+<body>
+    <div id="main">
+        <h1>Whispering Hills Community Finder</h1>
+        <div id="header"><a href="index.html">Back to Login</a></div>
+        
+        <h2>Create an Account</h2>
+        <div class="divider"></div>
+
+        <form id="signupForm" onsubmit="return handleSignUp(event)">
+            <input type="text" id="fname" placeholder="First Name" required />
+            <input type="text" id="lname" placeholder="Last Name" required />
+            <input type="text" id="username" placeholder="Username" required />
+            <input type="password" id="password" placeholder="Password" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="text" id="phone" placeholder="Phone Number" required />
+            
+            <label>Account Type:</label>
+            <select id="role" onchange="toggleInterests()">
+                <option value="client">Client</option>
+                <option value="recruiter">Recruiter</option>
+                <option value="volunteer">Volunteer</option>
+            </select>
+
+            <div id="interestsSection">
+                <label>Interests (e.g., Art, Teaching, Computer Science):</label>
+                <input type="text" id="interests" placeholder="Enter interests separated by commas">
+            </div>
+
+            <button type="submit" style="background:#9B1313; color:white; padding:10px; margin-top:10px; cursor:pointer;">Create Account</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleInterests() {
+            const role = document.getElementById('role').value;
+            document.getElementById('interestsSection').style.display = (role === 'client') ? 'block' : 'none';
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.toLowerCase().trim();
+            // Get existing users from the database you already use in Admin management
+            let userDb = JSON.parse(localStorage.getItem('userDatabase')) || {};
+
+            if (userDb[username]) {
+                alert("Username already exists!");
+                return;
+            }
+
+            const newUser = {
+                fname: document.getElementById('fname').value,
+                lname: document.getElementById('lname').value,
+                password: document.getElementById('password').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                role: document.getElementById('role').value,
+                interests: document.getElementById('interests').value || ""
+            };
+
+            userDb[username] = newUser;
+            localStorage.setItem('userDatabase', JSON.stringify(userDb));
+
+            alert("Account created! Please log in.");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

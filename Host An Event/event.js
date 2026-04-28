@@ -1,65 +1,51 @@
-var EXTERNAL_OPPORTUNITY_DEFAULT_ERROR = 'Please fill in all required fields correctly.';
-var EXTERNAL_OPPORTUNITY_EXPIRED_DATE_ERROR = 'The provided date has expired. Please enter a current date.';
+function validateEvent(e) {
+    e.preventDefault(); 
 
-function validateEvent(event) {
-	event.preventDefault();
+    // 1. Get the current logged-in user from the session
+    const userLabel = sessionStorage.getItem('loggedInUser') || "Guest";
+    // Extract just the username (e.g., "recruiter1")
+    const currentUsername = userLabel.split(' ')[0].toLowerCase();
 
-	const eventName = document.getElementById('eventname').value.trim();
-	const startDate = document.getElementById('startdate').value;
-	const location = document.getElementById('location').value.trim();
-	const contact = document.getElementById('contactinfo').value.trim();
-	const sponsor = document.getElementById('sponsorname').value.trim();
-	const notesEl = document.getElementById('notes');
-	const notes = notesEl ? notesEl.value.trim() : '';
+    try {
+        const getVal = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.value : "N/A";
+        };
 
-	const orgnameEl = document.getElementById('orgname');
-	const isExternalOpportunityForm = orgnameEl !== null;
+		const startVal = getVal('startdate'); 
+        const endVal = getVal('oppEndDate');
 
-	if (isExternalOpportunityForm) {
-		const orgname = orgnameEl.value.trim();
-		const extError = document.getElementById('externalErrorMessage');
-		if (orgname === '' || eventName === '' || startDate === '' || location === '' || contact === '' || sponsor === '') {
-			if (extError) {
-				extError.textContent = EXTERNAL_OPPORTUNITY_DEFAULT_ERROR;
-				extError.style.display = 'block';
-			}
-			return false;
+		// Validation: Ensure at least a start date exists
+		if (!startVal) {
+			alert("Please select a start date.");
+			return;
 		}
-		if (typeof whcfIsStartDateBeforeToday === 'function' && whcfIsStartDateBeforeToday(startDate)) {
-			if (extError) {
-				extError.textContent = EXTERNAL_OPPORTUNITY_EXPIRED_DATE_ERROR;
-				extError.style.display = 'block';
-			}
-			return false;
-		}
-		if (typeof addStoredJobOpportunity === 'function') {
-			addStoredJobOpportunity({
-				title: eventName,
-				organization: orgname,
-				location: location,
-				startDate: startDate,
-				contact: contact,
-				sponsor: sponsor,
-				notes: notes
-			});
-		}
-		if (extError) {
-			extError.textContent = EXTERNAL_OPPORTUNITY_DEFAULT_ERROR;
-			extError.style.display = 'none';
-		}
-		alert('Opportunity submitted successfully! It will appear on the Job Opportunities page.');
-		event.target.reset();
-		return false;
-	}
 
-	const errorMessage = document.getElementById('errorMessage');
+        // 2. Build the object WITH the Recruiter ID
+        const newOpportunity = {
+            title: getVal('eventname'),
+            category: getVal('eventCategory'), 
+            type: getVal('eventType'),         
+            startDate: startVal,
+            endDate: endVal || null,
+            location: getVal('location'),
+            contact: getVal('contactinfo'),
+            org: getVal('sponsorname'),
+            details: getVal('notes'),
+            status: "Pending Vetting",
+            recruiterID: currentUsername 
+        };
 
-	if (eventName === '' || startDate === '' || location === '' || contact === '' || sponsor === '') {
-		errorMessage.style.display = 'block';
-		return false;
-	}
+        // 3. Save to Vetting Queue
+        let vettingQueue = JSON.parse(localStorage.getItem('vettingQueue')) || [];
+        vettingQueue.push(newOpportunity);
+        localStorage.setItem('vettingQueue', JSON.stringify(vettingQueue));
 
-	alert('Event submitted successfully!');
-	errorMessage.style.display = 'none';
-	return false;
+        alert("Success! This has been sent to vetting and is linked to your account.");
+        document.getElementById('eventForm').reset();
+
+    } catch (err) {
+        console.error("Submission Error:", err);
+    }
+    return false;
 }

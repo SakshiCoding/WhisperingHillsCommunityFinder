@@ -10,8 +10,6 @@
 		<h1>Whispering Hills Community Finder</h1>
 		<div id="header">
 			<a href="../Home Page/index.html">Home</a>
-			<a href="../Login Page/index.html">Log In</a>
-			<a href="#">Sign Up</a>
 		</div>
 		<div id="EventHostForm">
 			<h2>Host An Event</h2>
@@ -19,16 +17,42 @@
 			<form id="eventForm" onsubmit="return validateEvent(event)">
 				<label for="eventname">Event Name</label>
 				<input type="text" id="eventname" name="eventname" required />
+
+				<label>Category</label><br>
+					<select id="eventCategory" style="width: 100%; margin-bottom: 15px;">
+						<option value="Art">Art</option>
+						<option value="Teaching">Teaching</option>
+						<option value="Engineering">Engineering</option>
+						<option value="Computer Science">Computer Science</option>
+						<option value="Construction">Construction</option>
+						<option value="Celebration">Celebration</option>
+						<option value="Community Gathering">Community Gathering</option>
+						<option value="Career Fair">Career Fair</option>
+					</select><br>
+
+				<label>Opportunity Type</label><br>
+					<select id="eventType" style="width: 100%; margin-bottom: 15px;">
+						<option value="Jobs">Jobs</option>
+						<option value="Social">Social</option>
+					</select><br>
+
 				<label for="startdate">Event Start Date</label>
 				<input type="date" id="startdate" name="startdate" required />
+
+				<label>End Date </label>
+				<input type="date" id="oppEndDate">	
+
 				<label for="location">Event Address</label>
 				<input type="text" id="location" name="location" required />
 				<label for="contactinfo">Contact Information</label>
 				<input type="text" id="contactinfo" name="contactinfo" required />
+
 				<label for="sponsorname">Sponsor Name</label>
 				<input type="text" id="sponsorname" name="sponsorname" required />
+
 				<label for="notes">Notes (Optional)</label>
 				<textarea id="notes" name="notes" rows="3"></textarea>
+
 				<input type="submit" value="Submit Event" />
 			</form>
 			<p id="errorMessage">Please fill in all required fields correctly.</p>

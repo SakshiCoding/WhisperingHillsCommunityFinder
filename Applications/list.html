@@ -12,32 +12,43 @@
         </div>
         
         <div id="contentColumn" style="width: 100%;">
-            <h2>Pending Applications</h2>
-            <div class="divider" style="width: 100%;"></div>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;">
-                <tr style="background: #9B1313; color: white;">
-                    <th style="padding: 10px;">Applicant Name</th>
-                    <th>Position</th>
-                    <th>Action</th>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">Eren Jaeger</td>
-                    <td>Software Engineer</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">Armin Arlert</td>
-                    <td>Event Coordinator</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;">Mikasa Ackerman</td>
-                    <td>Director</td>
-                    <td><a href="view_applicant.html">View & Review</a></td>
-                </tr>
-            </table>
+            <h2>Incoming Applications</h2>
+            <div id="app-table-container"></div>
         </div>
+        <script>
+            window.onload = function() {
+                const userLabel = sessionStorage.getItem('loggedInUser') || "";
+                const currentRecruiter = userLabel.split(' ')[0].toLowerCase();
+                const allApps = JSON.parse(localStorage.getItem('allApplications')) || [];
+                
+                // Filter apps meant for THIS recruiter
+                const myApps = allApps.filter(a => a.recruiterID === currentRecruiter);
+                const container = document.getElementById('app-table-container');
+
+                if(myApps.length === 0) {
+                    container.innerHTML = "<p>No applications received yet.</p>";
+                    return;
+                }
+
+                let html = `<table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;">
+                    <tr style="background: #9B1313; color: white;">
+                        <th style="padding: 10px;">Applicant Name</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>`;
+
+                myApps.forEach((app, index) => {
+                    html += `<tr>
+                        <td style="padding: 10px;">${app.applicantName}</td>
+                        <td>${app.position}</td>
+                        <td><strong>${app.status}</strong></td>
+                        <td><a href="view_applicant.html?id=${app.id}">View & Review</a></td>
+                    </tr>`;
+                });
+                container.innerHTML = html + "</table>";
+            }
+        </script>
     </div>
 </body>
 </html>
