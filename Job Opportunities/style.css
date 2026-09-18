@@ -1,0 +1,165 @@
+/* Matches Host An Event / Login Page */
+
+body {
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	background: #FFFFFF;
+}
+
+* {
+	margin: 0 auto 0 auto;
+	text-align: left;
+}
+
+html, body {
+	text-align: center;
+}
+
+p {
+	text-align: left;
+}
+
+h1 {
+	font-size: 30px;
+	font-weight: normal;
+	padding: 10px;
+}
+
+h2 {
+	font-size: 26px;
+	font-weight: normal;
+	padding-left: 15px;
+	padding-top: 35px;
+}
+
+#main {
+	width: 641px;
+	height: auto;
+	padding-bottom: 20px;
+}
+
+#header {
+	color: #ffffff;
+	clear: both;
+	width: 641px;
+	height: 25px;
+	background-color: #9B1313;
+	text-align: right;
+	line-height: 25px;
+}
+
+#header a, #header a:visited, #header a:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 12px;
+	padding-right: 5px;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+#header a:hover {
+	color: #F2EAEA;
+	border: none;
+}
+
+#footer {
+	color: #ffffff;
+	font-size: 10px;
+	clear: both;
+	width: 641px;
+	height: 25px;
+	background-color: #9B1313;
+	text-align: center;
+	line-height: 25px;
+	font-weight: normal;
+}
+
+#footer a, #footer a:visited, #footer a:hover {
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: #9B1313;
+}
+
+a:hover {
+	color: #9B1313;
+	border-bottom: dashed 1px #DD6A6A;
+}
+
+#EventHostForm {
+	float: left;
+	width: 441px;
+	padding: 20px;
+}
+
+.divider {
+	width: 408px;
+	height: 3px;
+	margin-bottom: 10px;
+	background-color: #DD6A6A;
+}
+
+#emptyJobsMessage,
+#emptyHistoryMessage {
+	font-weight: bold;
+	color: #9B1313;
+	margin-top: 10px;
+	line-height: 1.5;
+}
+
+#jobList {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0 0 0;
+	text-align: left;
+}
+
+#jobList li {
+	margin-bottom: 16px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #e0e0e0;
+	line-height: 1.5;
+}
+
+#jobList li:last-child {
+	border-bottom: none;
+}
+
+#historyList {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0 0 0;
+	text-align: left;
+}
+
+#historyList li {
+	margin-bottom: 16px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #e0e0e0;
+	line-height: 1.5;
+}
+
+#historyList li:last-child {
+	border-bottom: none;
+}
+
+.job-title {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 4px;
+}
+
+.job-meta {
+	color: #333;
+	font-size: 11px;
+}

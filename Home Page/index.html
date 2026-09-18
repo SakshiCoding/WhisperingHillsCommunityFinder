@@ -1,0 +1,222 @@
+ <!--
+Design by Bryant Smith
+http://www.bryantsmith.com
+http://www.aszx.net
+email: template [-at-] bryantsmith [-dot-] com
+Released under Creative Commons Attribution 2.5 Generic.  In other words, do with it what you please; but please leave the link if you'd be so kind :)
+
+Name       : Simple!
+Description: Top naviagation (main), and right naviagation (secondary) with main content in left column
+Version    : 1.0
+Released   : 20081009
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" />
+<title>Simple Factorial by Bryant Smith</title>
+</head>
+
+<body>
+  <div id="main" class="whcf-home-layout">
+  	<h1>Whispering Hills Community Finder</h1>
+  	<div id="header">
+    	 <a href="index.html">Home</a>
+         <a href="#about">About us</a>
+
+         <span id="volunteer-tools" style="display: none;">
+         <a href="../Volunteer Page/vetting.html" style="color: #FFD700;">Vetting Queue</a>
+         </span>
+
+         <div id="notification-area" style="display: none; position: relative; vertical-align: top;"> 
+            <a href="#" id="notification-btn">Notifications</a>
+            <span id="notification-dot"></span>
+            
+            <div id="notification-window"> 
+                <h3>Recommended for You</h3>
+                <div class="divider" style="width: 100%;"></div>
+                <ul id="job-list">
+                    <li><strong>Junior Web Developer</strong><br>XYZ Tech</li>
+                    <li><strong>Event Coordinator</strong><br>ABC Organization</li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech has recieved your application</strong></li>
+                    <li><strong>APPLICATION UPDATE: XYZ Tech would like to schedule an interview with you</strong></li>
+                </ul>
+                <button onclick="closeNotifications()">Close</button>
+            </div>
+        </div>    
+       
+    <span id="auth-links">
+        <a href="../Login Page/index.html">Log In</a>
+        <a href="#">Sign Up</a>
+    </span>
+</div>
+    <div id="contentColumn">
+		
+  <!-- This is an entry, copy and paste it to create a new one -->      
+    <h2>Our Mission</h2>
+        <div class="divider"></div>
+        <p>Whispering Hills Community Finder strives to provide opportunities and information to people with special needs and their families. There has been a lack of recognition and connections within the special needs community, which leads people to start developing bad habits. The creator of Whispering Hills, Lisa Williams, noticed that the resources were scattered across town, hard to find, and not allowing these families to benefit fully. The goal of Whispering Hills Community Finder is to design a website that has all the connections, opportunities, and jobs in one place. The website accepts events and jobs and provides the relevant information to clients who have an account. This new community was built to foster connections, encourage support, and improve the quality of living.</p>
+  <!-- This is an entry, copy and paste it to create a new one -->
+  
+  
+    <!-- This is an entry, copy and paste it to create a new one -->      
+  <h2>Sponsors</h2>
+        <div class="divider"></div>
+        <p>Lisa Williams is the co-founder, who is a passionate mother who saw the changes that needed to happen in the town she just moved to. She knew there needed to be a system in which people with similar struggles could connect, and her drive to form this community was for her children. Her daughter had Down Syndrome, and after she moved to town, she noticed the lack of a community. She wanted to develop a Community Finder to create a hub where all connections and opportunities could be located easily.</p>
+            <h2>Apply here to receive the weekly newsletter!</h2>
+        <p>This newsletter is the one-stop shop for all current opportunities, happenings, and local connections for the week. Events will be posted so you won't miss out on the opportunities offered, so click the link below to opt in to receive emailed weekly newsletters.</p>
+        <p><label><input type="checkbox" class="newsletter-optin" /> I would like to recieve the weekly newsletter</label></p>
+  <!-- This is an entry, copy and paste it to create a new one -->
+  
+  
+   <!-- This is an entry, copy and paste it to create a new one -->      
+  <h2>Our Volunteer Application Process</h2>
+        <div class="divider"></div>
+        <p>Volunteer applicants assist the program in searching for event opportunities, and help the community grow. Background checks are required and volunteers may sign up for the newsletter.</p>
+  <!-- This is an entry, copy and paste it to create a new one -->
+  </div>
+
+  <div id="navColumn" data-role-sidebar="user1">
+		<div class="subHeader"><h3>Opportunities</h3></div>
+            <ul>
+                <li><a href="../Volunteer Application/index.html">Apply to be a Volunteer</a></li>
+                <li><a href="../Host An Event/index.html">Create An Event</a></li>
+                <li><a href="../Job Opportunities/index.html">Job Opportunities</a></li>
+                <li><a href="../Social%20Opportunities/index.html">Social Opportunities</a></li>
+            </ul>
+
+  
+
+		<div class="subHeader"><h3>Event Archieve</h3></div>
+            <ul>
+                <li><a href="../Job Opportunity History/index.html">Job Opportunity History</a></li>
+                <li><a href="../Social%20Opportunity%20History/index.html">Social Opportunity History</a></li>
+            </ul>
+
+  </div>
+  
+  <script>
+    window.onload = function() {
+        const userLabel = sessionStorage.getItem('loggedInUser');
+        const authContainer = document.getElementById('auth-links');
+        const dot = document.getElementById('notification-dot'); 
+        const notifyWindow = document.getElementById('notification-window'); 
+        const notificationArea = document.getElementById('notification-area'); 
+        const jobList = document.getElementById('job-list');
+
+        console.log('Logged in user:', userLabel); 
+
+
+        if (userLabel && authContainer) {
+            if(notificationArea){
+                notificationArea.style.display = 'inline-block'; // Show notifications if user is logged in
+            }
+
+            // Replace the Log In/Sign Up links with the user label and a Logout button
+            authContainer.innerHTML = `
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+            `;
+
+            // Requirement 502: Only Clients see the Notification button
+         if (userLabel.toLowerCase().includes('client')) {
+         if (notificationArea) notificationArea.style.display = 'inline-block';
+         if (dot) dot.style.display = 'block';
+         } 
+    
+        // Requirement 501: Only Volunteers see the Vetting Queue link
+         else if (userLabel.toLowerCase().includes('volunteer')) {
+         const volTools = document.getElementById('volunteer-tools');
+         if (volTools) {
+            volTools.style.display = 'inline-block'; // Typical Course Step 1
+             }
+         }
+        
+            if(userLabel.toLowerCase().includes('client')){
+                if(notificationArea){
+                    notificationArea.style.display = 'inline-block'; 
+                }
+
+                if(dot){
+                    dot.style.display = 'block'; 
+                }    
+                dot.style.display = 'block'; // Show the notification dot for clients
+            }
+            else{
+                if(notificationArea){
+                    notificationArea.style.display = 'none'; 
+                }
+            }
+        }
+
+        const btn = document.getElementById('notification-btn');
+
+        if(btn && notifyWindow){
+            btn.onclick = function(e){
+                e.preventDefault(); 
+                const isCurrentlyVisible = notifyWindow.style.display === 'block';
+                notifyWindow.style.display = isCurrentlyVisible ? 'none' : 'block'; 
+
+                if(dot) dot.style.display = 'none'; 
+            };
+        }
+
+        if(userLabel && authContainer){
+            let recruiterLink = ""; 
+
+            if(userLabel.toLowerCase().includes('recruiter')){
+                recruiterLink = `<a href="../Applications/list.html">Applications</a>`;
+            }
+
+            authContainer.innerHTML = ` 
+                ${recruiterLink}
+                <span style="color: white; font-weight: bold; margin-left: 12px;">${userLabel}</span>
+                <a href="#" onclick="logout()" style="margin-left: 10px;">Logout</a>
+            `;
+        }
+
+        if (approvedData.length > 0) {
+            jobList.innerHTML = ''; // Clear hardcoded mock data
+            approvedData.forEach(item => {
+                // System displays only approved records
+                jobList.innerHTML += `<li><strong>${item.name}</strong><br>${item.details}</li>`;
+            });
+            document.getElementById('notification-dot').style.display = 'block';
+        }
+
+    }; 
+    function closeNotifications() {
+        document.getElementById('notification-window').style.display = 'none';
+    }
+zz
+
+    function logout() {
+        sessionStorage.removeItem('loggedInUser');
+        window.location.reload(); // Refresh to show Log In/Sign Up again
+    }
+</script>
+        
+        
+  
+</div>
+<!-- Please leave the link(s) in the footer, but please do modify it in any other way you please -->
+<script type="text/javascript">
+  (function () {
+    var checkboxes = document.querySelectorAll(".newsletter-optin");
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener("change", function () {
+        if (this.checked) {
+          alert("You've been opted into the weekly newsletter!");
+          this.checked = false;
+        }
+      });
+    }
+  })();
+</script>
+<script src="../shared/auth-nav.js"></script>
+<script src="../shared/home-sidebar-role.js"></script>
+</body>
+</html>
